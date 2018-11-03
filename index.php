@@ -12,7 +12,6 @@
                 <div class="modal-header centrar">
                     <h2 class="modal-title" id="myModalLabel">Ingrese sus datos</h2>
                 </div>
-
                 <div class="modal-body centrar">
                     <div class="centrar row">
                         <div class="col-xs-6">

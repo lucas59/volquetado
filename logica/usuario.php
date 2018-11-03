@@ -11,7 +11,10 @@
  *
  * @author Lucas
  */
+require_once '../conexion/abrir_conexion.php';
+
 class usuario {
+
     private $ci;
     private $nombre;
     private $apellido;
@@ -19,6 +22,7 @@ class usuario {
     private $celular;
     private $direccion;
     private $pass;
+
     function __construct($ci, $nombre, $apellido, $cargo, $celular, $direccion, $pass) {
         $this->ci = $ci;
         $this->nombre = $nombre;
@@ -28,6 +32,7 @@ class usuario {
         $this->direccion = $direccion;
         $this->pass = $pass;
     }
+
     function getCi() {
         return $this->ci;
     }
@@ -83,5 +88,28 @@ class usuario {
     function setPass($pass) {
         $this->pass = $pass;
     }
-    
+
+    public static function getUsuarios() {
+        ini_set("display_errors", 1);
+        error_reporting(E_ALL & ~E_NOTICE);
+        $usuarios = [];
+        $stmt = DB::conexion()->prepare(
+                "SELECT * from usuarios");
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado como un objeto
+            $datosPersona = $this->datosVerPerfil($fila->ci);
+            $usuarios[] = $datosPersona;
+        }
+        return $usuarios;
+    }
+
+    public function datosVerPerfil($cedula) {
+        $stmt = DB::conexion()->prepare("SELECT * FROM usuario where ci='" . $cedula . "'");
+        $stmt->execute();
+        $usuario = $stmt->get_result();
+        $usuario_obj = $usuario->fetch_object();
+        return $usuario_obj;
+    }
+
 }

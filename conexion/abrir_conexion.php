@@ -1,22 +1,17 @@
-<?php 
-	// Parametros a configurar para la conexion de la base de datos 
-	$host = "localhost";    // sera el valor de nuestra BD 
-	$basededatos = "pasantia";    // sera el valor de nuestra BD 
-	$usuariodb = "root";    // sera el valor de nuestra BD 
-	$clavedb = "";    // sera el valor de nuestra BD 
+<?php
 
-	//Lista de Tablas
-	$tabla_db1 = "propietario"; 	   // tabla de usuarios
-	
+require_once ("../config/config.php");
 
-	//error_reporting(0); //No me muestra errores
-	
-	$conexion = new mysqli($host,$usuariodb,$clavedb,$basededatos);
+class DB {
 
-
-	if ($conexion->connect_errno) {
-	    echo "Nuestro sitio experimenta fallos....";
-	    exit();
-	}
-
+    public static function conexion() {
+        static $conexion = null;
+        if (null === $conexion) {
+            $conexion = new mysqli(DB_HOST, DB_USR, DB_PASS, DB_DB)
+                    or die("No se puede conectar con el servidor");
+        }
+        $conexion->set_charset("utf8");
+        return $conexion;
+    }
+}
 ?>

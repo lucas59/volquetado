@@ -1,5 +1,6 @@
 <?php
 
+include '../conexion/abrir_conexion.php';
 include '../logica/usuario.php';
 session_start();
 if (isset($_POST['submit'])) {
@@ -7,7 +8,8 @@ if (isset($_POST['submit'])) {
         $cedula = $_POST['user'];
         $pass = $_POST['password'];
         $consulta = "SELECT * FROM usuarios WHERE ci=$cedula";
-        include '../conexion/abrir_conexion.php';
+        $conexion= DB::conexion();
+
         $resultado = mysqli_query($conexion, $consulta);
         $arreglo = mysqli_fetch_array($resultado);
         if ($arreglo) {
@@ -17,24 +19,20 @@ if (isset($_POST['submit'])) {
 
                 if ($usuario->getCargo() == "Oficina") {
                     header('location: ../Vistas/oficina.php');
-                    
                 } else if ($usuario->getCargo() == "Gestor") {
                     header('location: ../Vistas/gestor.php');
-                    
                 } else if ($usuario->getCargo() == "Chofer") {
                     header('location: ../Vistas/chofer.php');
-                    
                 } else if ($usuario->getCargo() == "Inspector") {
                     header('location: ../Vistas/inspector.php');
                 }
-                
             } else {
                 header('location: ../index.php?mensaje=Su contraseña no coincide');
             }
         } else {
-            header('location: ../index.php?mensaje=El usuario no existe');
+           // header('location: ../index.php?mensaje=El usuario no existe');
         }
-        include './conexion/cerrar_conexion.php';
+        include '../conexion/cerrar_conexion.php';
     } else {
         header('location: ../index.php?mensaje=nollego');
     }

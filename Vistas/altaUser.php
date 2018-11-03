@@ -1,78 +1,77 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Agregar usuario</title>
-        <link type="text/css" href="../bootstrap/css/bootstrap.css"></link>
-        
+        <link type="text/css" href="../bootstrap/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+        <link type="text/css" href="../css/indexCSS.css" rel="stylesheet">
+        <?php
+        if (isset($_GET['mensaje'])) {
+            echo "<script type='text/javascript'>alert($mensaje);</script>";
+        }
+        ?>
     </head>
-    <body>
-        <div class="container py-3">
-            <div class="row">
-                <div class="mx-auto col-sm-6">
-                    <!-- form user info -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="mb-0">User Information</h4>
-                        </div>
-                        <div class="card-body">
-                            <form class="form" role="form" autocomplete="off">
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="Jane">
+    <body style="background-color: #68b0ab">
+        <div id="login-overlay" class="modal-dialog">
+            <div class="modal-content" style="margin-top: 18%;">
+                <div class="modal-header centrar">
+                    <h2 class="modal-title" id="myModalLabel">Registrar usuario</h2>
+                </div>
+                <div class="modal-body centrar">
+                    <div class="centrar row">
+                        <div class="col-xs-6">
+                            <div class="well">
+                                <form id="loginForm" action="../logica/altaUsuario.php" method="POST">
+                                    <div class="form-group">
+                                        <label for="cedula" class="control-label">Cedula</label>
+                                        <input type="text" name="cedula"  class="form-control"required/>
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="Bishop">
+                                    <div class="form-group">
+                                        <label for="nombre" class="control-label">Nombre</label>
+                                        <input type="text" name="nombre"  class="form-control" required/>
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="email" value="email@gmail.com">
+                                    <div class="form-group">
+                                        <label for="apellido" class="control-label">Apellido</label>
+                                        <input type="text" name="apellido" class="form-control" required />
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="">
+                                    <div class="form-group">
+                                        <label for="password" class="control-label">Contraseña:</label>
+                                        <input type="password" name="pass" id="inputPassword" class="form-control" required/>
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="url" value="">
+                                    <div class="form-group">
+                                        <label for="username" class="control-label">Confirmar contraseña</label>
+                                        <input type="password" name="passc" class="form-control" required >
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="janeuser">
+                                    <div class="">
+                                        <select name="tipo">
+                                            <option value="oficina">Oficina</option>
+                                            <option value="inspector">Inspector</option>
+                                            <option value="chofer">Chofer</option>
+                                            <option value="gestor"></option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password">
+                                    <div class="form-group">
+                                        <label for="fecha" class="control-label">Fecha</label>
+                                        <input type="date" name="fecha"  class="form-control" required/>
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Confirm</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password">
+                                    <div class="form-group">
+                                        <label for="direccion" class="control-label">Direccion</label>
+                                        <input type="text" name="direccion"  class="form-control" required/>
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col-lg-9">
-                                        <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="button" class="btn btn-primary" value="Save Changes">
+                                    <div class="form-group">
+                                        <label for="celular" class="control-label">Celular</label>
+                                        <input type="text" name="celular"  class="form-control" required/>
+                                        <span class="help-block"></span>
                                     </div>
-                                </div>
-                            </form>
+                                    <button name="submit" type="submit" style="background-color: #287AE6; color : white"  class="btn btn-block">Iniciar Sesión</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
