@@ -1,0 +1,23 @@
+.box {
+    width: 500px;
+    margin: 200px 0;
+}
+.float {
+    position: absolute;
+    z-index: 2;
+}
+
+.form {
+    
+}
+
+.contenedor{
+    width: 50%;
+    height: 50%;
+    border: solid;
+}
+.centrar{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
