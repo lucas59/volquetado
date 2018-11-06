@@ -27,14 +27,14 @@ if (isset($_POST['submit'])) {
                     header('location: ../Vistas/inspector.php');
                 }
             } else {
-                header('location: ../index.php?mensaje=Su contraseña no coincide');
+                header('location: ../index.php?malPass=Su contraseña no coincide');
             }
         } else {
-           // header('location: ../index.php?mensaje=El usuario no existe');
+            //header('location: ../index.php?noExiste=El usuario no existe');
         }
         include '../conexion/cerrar_conexion.php';
     } else {
-        header('location: ../index.php?mensaje=nollego');
+        header('location: ../index.php?noLlego=nollego');
     }
 } else {
     header('location: ../index.php');

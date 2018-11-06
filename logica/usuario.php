@@ -11,7 +11,7 @@
  *
  * @author Lucas
  */
-require_once '../conexion/abrir_conexion.php';
+//include '../conexion/abrir_conexion.php';
 
 class usuario {
 
@@ -94,7 +94,7 @@ class usuario {
         error_reporting(E_ALL & ~E_NOTICE);
         $usuarios = [];
         $stmt = DB::conexion()->prepare(
-                "SELECT * from usuarios");
+            "SELECT * from usuarios");
         $stmt->execute();
         $resultado = $stmt->get_result();
         while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado como un objeto
@@ -111,5 +111,25 @@ class usuario {
         $usuario_obj = $usuario->fetch_object();
         return $usuario_obj;
     }
+
+    public static function existe($cedula) {
+        $a = false;
+        $consulta = DB::conexion()->prepare("select * from usuarios where ci='.$cedula'");
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        if ($resultado->num_rows == 1) {
+            return true;
+        } else if($resultado->num_rows==0) {
+            return false;
+        }
+    }
+
+    function calcularEdad($fecha_nacimiento) { 
+        $tiempo = strtotime($fecha); 
+        $ahora = time(); 
+        $edad = ($ahora-$tiempo)/(60*60*24*365.25); 
+        $edad = floor($edad); 
+        return $edad; 
+    } 
 
 }

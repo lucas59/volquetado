@@ -1,10 +1,12 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" type="text/css"/>
-        <title>Administrador de volquetas</title>
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-        <meta charset="utf-8">
-        <style>
+<head>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" type="text/css"/>
+    <title>Administrador de volquetas</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <?php 
+    require ('../conexion/abrir_conexion.php'); ?>
+    <style>
             /* Always set the map height explicitly to define the size of the div
             * element that contains the map. */
             #map {
@@ -19,11 +21,11 @@
             }
         </style>
     </head>
-    <body style="background-color: #076f89">
+    <body style="background-color: #3295e7">
         <br>
         <div id="map"></div>
         <?php
-        include "../conexion/abrir_conexion.php";
+        $conexion= DB::conexion();
 
         $query = "select * from volquetas";
         $resultado = mysqli_query($conexion, $query);
@@ -56,9 +58,9 @@
         mysqli_close($conexion);
         ?>
         <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
-        </script>
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-        <script type="text/javascript" src="../js/miDireccion.js"></script>
-    </body>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
+    </script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../js/miDireccion.js"></script>
+</body>
 </html>

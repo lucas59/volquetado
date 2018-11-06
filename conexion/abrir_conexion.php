@@ -1,6 +1,6 @@
 <?php
 
-require_once ("../config/config.php");
+require '../config/config.php';
 
 class DB {
 

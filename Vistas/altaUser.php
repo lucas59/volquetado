@@ -5,12 +5,19 @@
         <link type="text/css" href="../bootstrap/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
         <link type="text/css" href="../css/indexCSS.css" rel="stylesheet">
         <?php
-        if (isset($_GET['mensaje'])) {
-            echo "<script type='text/javascript'>alert($mensaje);</script>";
+        if (isset($_GET['exito'])) {
+            echo '<script language="javascript">alert("El usuario se registro con exito.");</script>';
+        } elseif (isset($_GET['noexito'])) {
+            echo '<script language="javascript">alert("Este usuario ya esta registrado.");</script>';
+        } else if (isset($_GET['malPass'])) {
+            echo '<script language="javascript">alert("Verifique su contraseña.");</script>';
+        } else if (isset($_GET['fallo'])) {
+            echo '<script language="javascript">alert("Fallo la consulta.");</script>';
         }
         ?>
     </head>
-    <body style="background-color: #68b0ab">
+    <body style="background-color: #3295e7">
+        <?php include '../Vistas/barra_menu.php'; ?>
         <div id="login-overlay" class="modal-dialog">
             <div class="modal-content" style="margin-top: 18%;">
                 <div class="modal-header centrar">
@@ -47,11 +54,11 @@
                                         <span class="help-block"></span>
                                     </div>
                                     <div class="">
-                                        <select name="tipo">
+                                        <select class="dropdown-toggle" name="tipo">
                                             <option value="oficina">Oficina</option>
                                             <option value="inspector">Inspector</option>
                                             <option value="chofer">Chofer</option>
-                                            <option value="gestor"></option>
+                                            <option value="gestor">Gestor</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
