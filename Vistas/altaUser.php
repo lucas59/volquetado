@@ -16,12 +16,12 @@
         }
         ?>
     </head>
-    <body style="background-color: #3295e7">
+    <body style="background-color: #e4e5e6">
         <?php include '../Vistas/barra_menu.php'; ?>
         <div id="login-overlay" class="modal-dialog">
             <div class="modal-content" style="margin-top: 18%;">
                 <div class="modal-header centrar">
-                    <h2 class="modal-title" id="myModalLabel">Registrar usuario</h2>
+                    <h2 style="margin-left: 25%" class="modal-title" id="myModalLabel">Registrar usuario</h2>
                 </div>
                 <div class="modal-body centrar">
                     <div class="centrar row">

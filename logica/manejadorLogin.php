@@ -8,15 +8,19 @@ if (isset($_POST['submit'])) {
         $cedula = $_POST['user'];
         $pass = $_POST['password'];
         $consulta = "SELECT * FROM usuarios WHERE ci=$cedula";
-        $conexion= DB::conexion();
+        $conexion = DB::conexion();
 
         $resultado = mysqli_query($conexion, $consulta);
-        $arreglo = mysqli_fetch_array($resultado);
+        $arreglo = null;
+        if ($resultado) {
+            $arreglo = mysqli_fetch_array($resultado);
+        }
+
         if ($arreglo) {
             $usuario = new usuario($arreglo['ci'], $arreglo['nombre'], $arreglo['apellido'], $arreglo['cargo'], $arreglo['celular'], $arreglo['direccion'], $arreglo['password']);
             if ($pass == $usuario->getPass()) {
                 $_SESSION['user'] = $usuario;
-
+                
                 if ($usuario->getCargo() == "Oficina") {
                     header('location: ../Vistas/oficina.php');
                 } else if ($usuario->getCargo() == "Gestor") {
@@ -30,7 +34,7 @@ if (isset($_POST['submit'])) {
                 header('location: ../index.php?malPass=Su contraseña no coincide');
             }
         } else {
-            //header('location: ../index.php?noExiste=El usuario no existe');
+            header('location: ../index.php?noExiste=El usuario no existe');
         }
         include '../conexion/cerrar_conexion.php';
     } else {

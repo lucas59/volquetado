@@ -15,13 +15,11 @@
         }
         ?>
     </head>
-    <body style="background-color: #3295e7">
+    <body style="background-color: #e4e5e6">
         <?php include '../Vistas/barra_menu.php'; ?>
         <div id="login-overlay" class="modal-dialog">
-            <div class="modal-content" style="margin-top: 18%;">
-                <div>
-
-                </div>
+            <div class="modal-content" style=" margin-top: 18%;">
+                
                 <div class="modal-header centrar">
                     <h2 class="modal-title" id="myModalLabel">Agregar camion</h2>
                 </div>

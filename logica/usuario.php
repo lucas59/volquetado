@@ -32,6 +32,8 @@ class usuario {
         $this->direccion = $direccion;
         $this->pass = $pass;
     }
+    
+    
 
     function getCi() {
         return $this->ci;

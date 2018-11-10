@@ -2,16 +2,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link type="text/css" href="bootstrap/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
-        <link type="text/css" href="css/indexCSS.css" rel="stylesheet">
+        <script type="text/javascript" src = "js/jquery-3.31.min.js"> </script>
+        <script type="text/javascript" src = "bootstrap/js/bootstrap.min.js" > </script> 
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+        <link type="text/css" href="css/indexCSS.css" rel="stylesheet"/>
+
         <title>Iniciar Sesion</title>
+        <?php
+        if (isset($_GET['malPass'])) {
+            ?>
+            <script>
+                $('#modal').modal();
+            </script>
+            <?php
+        } elseif (isset($_GET['noExiste'])) {
+            ?>
+            }
+            <script>
+                $('#modal').modal();
+            </script>
+            <?php
+        }
+        ?>
     </head>
-    <body>
+    <body style="background-color: #3295e7">
         <?php
         require 'logica/usuario.php';
         session_start();
         if (isset($_SESSION['user'])) {
-            $usuario=$_SESSION['user'];
+            $usuario = $_SESSION['user'];
             if ($usuario->getCargo() == 'Oficina') {
                 header('location: ../volquetado/Vistas/oficina.php');
             } else if ($usuario->getCargo() == 'Inspector') {
@@ -52,7 +71,27 @@
                         </div>
                     </div>
                 </div>
-            </div> 
-        <?php } ?>
-    </body>
+            </div>
+            <!-- Modal content-->
+            <div  class="modal fade" id="modal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Advertencia</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="mensaje">Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+</body>
 </html>

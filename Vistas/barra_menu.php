@@ -4,9 +4,9 @@
 
 <?php
 session_start();
-
+include '../logica/usuario.php';
 if (isset($_SESSION['user'])) {
-    $usuario=$_SESSION['user'];
+    $user = $_SESSION['user'];
 }
 ?>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
@@ -14,17 +14,14 @@ if (isset($_SESSION['user'])) {
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <?php if ($usuario=!null) {?>
+    <?php if ($user != null) { ?>
+        <div style="float: left" class="collapse navbar-collapse" id="navbarSupportedContent">
             <li style="float: left;" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><?php $usuario['nombre'] ?></a>
+                <a style="color: #ffffff" class="nav-link dropdown-toggle" data-toggle="dropdown"><?php $user; ?></a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Link 1</a>
-                    <a class="dropdown-item" href="#">Link 2</a>
-                    <a class="dropdown-item" href="#">Link 3</a>
+                    <a class="dropdown-item" href="../logica/cerrarSesion.php?cerrar=cerrar">Cerrar sesión</a>
                 </div>
             </li>
-        <?php  } ?>
+        <?php } ?>
     </div>
 </nav>
