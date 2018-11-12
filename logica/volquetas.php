@@ -11,6 +11,12 @@
  *
  * @author Lucas
  */
+
+require('../conexion/abrir_conexion.php');
+
+if(class_exists("volquetas"))
+    return;
+
 class volquetas {
 
     private $nro;
@@ -78,10 +84,22 @@ class volquetas {
         $stmt->execute();
         $resultado = $stmt->get_result();
         while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
-            $datosVolquetas = new volquetas($fila->nro,$fila->lat,$fila->long,$fila->fechaIngreso,$fila->estado);
+            $datosVolquetas = new volquetas($fila->nro,$fila->lat,$fila->lng,$fila->fechaIngreso,$fila->estado);
             $volquetas[] = $datosVolquetas;
         }
         return $volquetas;
+    }
+    public function agregarVolqueta($nro,$lat,$long,$fecha,$circuito){
+        $conexion = DB::conexion()->prepare("INSERT INTO volquetas(nro,lat,lng,fechaIngreso,estado,circuito) VALUES (?,?,?,?,?,?)");
+        $normal = "Normal";
+        $l=(double)$lat;
+        $l2=(double)$long;
+        $conexion->bind_param("sddsss",$nro,$l,$l2,$fecha,$normal,$circuito);
+        if($conexion->execute()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function listarTodas() {
@@ -94,9 +112,17 @@ class volquetas {
         return $resultado = mysqli_query($conexion, "SELECT * FROM historiavolquetas WHERE nro='".$nro."'");
     }
 
-    
-
-
+    public static function existe($numero,$circuito) {
+        $consulta = DB::conexion()->prepare("select * from volquetas where nro= ? and circuito = ?");
+        $consulta->bind_param("ss",$numero,$circuito);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        if ($resultado->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function datosVolqueta($nro) {
         $stmt = DB::conexion()->prepare("SELECT nro, fechaIngreso,estado  FROM volquetas where nro='" . $nro . "'");
@@ -106,38 +132,4 @@ class volquetas {
         return $volqueta_obj;
     }
 
-}
-
-if(isset($_GET['funcion'])){
-    $funcion = $_GET['funcion'];
-    switch ($funcion) {
-        case 'agregar':
-        $numero= $_GET['numero'];
-        $circuito= $_GET['circuito'];
-        $lat= $_GET['lat'];
-        $long= $_GET['long'];
-        $fecha=new date('d-m-Y');
-
-        function agregarVolqueta($numero,$circuito){
-            $conexion = DB::conexion();
-            $consulta="select * from volquetas where circuito='$circuito' and nro'$numero'";
-            $resultado = mysqli_query($conexion,$consulta);
-            if(mysqli_num_rows($resultado)==0){
-                $ingreso ="INSERT INTO volquetas(nro,lat,long,fechaIngreso,estado,circuito) VALUES('$numero','$lat','$long','$fecha','Normal','$circuito')";
-                $resultado = mysqli_query($conexion, $ingreso);
-                if ($resultado == TRUE) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }else {
-                return false;
-            }
-        }
-        break;
-        
-        default:
-            # code...
-        break;
-    }
 }

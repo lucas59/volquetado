@@ -20,7 +20,9 @@ if (isset($_POST['submit'])) {
             $usuario = new usuario($arreglo['ci'], $arreglo['nombre'], $arreglo['apellido'], $arreglo['cargo'], $arreglo['celular'], $arreglo['direccion'], $arreglo['password']);
             if ($pass == $usuario->getPass()) {
                 $_SESSION['user'] = $usuario;
-                
+                $_SESSION['ciUser'] = $arreglo['ci'];
+                $_SESSION['nombreUser'] = $arreglo['nombre'];
+                              
                 if ($usuario->getCargo() == "Oficina") {
                     header('location: ../Vistas/oficina.php');
                 } else if ($usuario->getCargo() == "Gestor") {

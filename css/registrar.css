@@ -70,3 +70,20 @@ input::-webkit-input-placeholder {
 	font-size: 11px;
 	text-align: center;
 }
+
+.select {
+  border: 1px solid #ccc;
+  width: 115px;
+  overflow: hidden;
+  background: #fff url("flecha-abajo.gif") no-repeat 90% center;
+}
+
+.select select {
+    padding: 5px 8px;
+    width: 115%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    appearance: none;
+}
