@@ -11,11 +11,6 @@
 		justify-content: center;
 	}
 </style>
-<?php
-if (isset($_SESSION['user'])) {
-    header('location: ../index.php');
-}
-?>
 </head>
 <body style="background-color:#e4e5e6">
 	<?php include '../Vistas/barra_menu.php'; ?>

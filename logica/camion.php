@@ -49,8 +49,8 @@ class camion {
         $this->tipo = $tipo;
     }
 
-    public static function existeCamion($matricula) {
-        $consulta = DB::conexion()->prepare("select * from camion where matricula=$matricula");
+    public static function existeCamion($padron,$matricula) {
+        $consulta = DB::conexion()->prepare("select * from camion where padron=$padron AND matricula=$matricula");
         $consulta->execute();
         $resultado = $consulta->get_result();
         if ($resultado->num_rows == 1) {
@@ -60,9 +60,9 @@ class camion {
         }
     }
 
-    public static function ingresar($matricula, $marca, $modelo, $tipo) {
+    public static function ingresar($padron,$matricula, $marca, $modelo, $tipo) {
         $conexion = DB::conexion();
-        $sql = "INSERT INTO camion (matricula, marca, modelo, tipo) VALUES('$matricula','$marca','$modelo','$tipo')";
+        $sql = "INSERT INTO camion (padron,matricula, marca, modelo, tipo) VALUES('$padron','$matricula','$marca','$modelo','$tipo')";
         $resultado = mysqli_query($conexion, $sql);
         if ($resultado == TRUE) {
             return true;

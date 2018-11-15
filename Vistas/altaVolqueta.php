@@ -9,6 +9,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <?php
+   
     require ('../conexion/abrir_conexion.php');
     require ('../logica/volquetas.php');
     include '../logica/circuito.php';
@@ -67,7 +68,7 @@
                                 <select id="circuito">
                                     <?php
                                     do {
-                                        echo "<option>" . $row['codigo'] . "</option>";
+                                        echo "<option>" . $row['recorrido'] . "</option>";
                                     } while ($row = mysqli_fetch_array($circuito));
                                     ?>
                                 </select>
@@ -79,6 +80,9 @@
                         <input id="numero" type="number" name="numero"  class="form-control" max="999" maxlength="3" required/>
                         <span class="help-block"></span>
                     </div>
+                    <div style="display: none;" id="alerta" class="alert alert-danger" role="alert">
+                        <p id="mensaje"></p>
+                    </div>
                     <div style="width:50%;float: left;"><button name="close" type="submit"  class="btn btn-block btn-danger">Cancelar</button></div>
                     <div id="submit" style="width:50%;float:right;"><button id="boton" name="submit" type="button" style="background-color: #287AE6; color : white"  class="btn btn-block">Agregar</button></div>
                 </div>
@@ -89,13 +93,15 @@
         <script type="text/javascript">
 
             $("#boton").click(function(e){
-
                 e.preventDefault();
                 console.log(e);
                 var circuito = document.getElementById("circuito").value;
                 var numero = document.getElementById("numero").value;
-                console.log(circuito);
-                console.log(numero);
+                if (numero==="") {
+                    $("#alerta").show();
+                    $("#mensaje").text("Debe ingresar el numero de la volqueta a agregar.");
+                    return;
+                }
 
                 $.ajax({
                     url: '/volquetado/logica/manejadorAltaVolqueta.php',
@@ -108,11 +114,15 @@
                         long:marcador.getPosition().lng()
                     },
                     success: function(response){
-                        console.log("asaasd");
                         if(response.localeCompare("exito")){
+                            $("#numero").text="";
                             location.reload();
-                        }
+                        }else if(response.localeCompare("yaesta")){
+                            $("#alerta").show();
+                            $("#mensaje").text("Esta volqueta ya a sido registrada anteriormente.");
+                        }else if(response.localeCompare("error")){
 
+                        }
                     },
                     error: function(response){
                         console.log(response);
@@ -120,6 +130,8 @@
                 });
 
             });
+
+
 
         </script>
 

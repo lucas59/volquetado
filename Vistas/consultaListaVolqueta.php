@@ -10,7 +10,7 @@ and open the template in the editor.
     <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/listarTabla.js"></script>
-
+    
     <title></title>
 </head>
 <body style="background-color: #e4e5e6">
@@ -25,7 +25,9 @@ and open the template in the editor.
     <div style="  overflow-x: auto;">
         <table id="tabla" class="table table-striped table-bordered table-hover" >
             <thead>
-                <tr>   
+                <tr>
+
+                    <th class="active" style = "color: black" >Circuito</th>   
                     <th class="active" style = "color: black" >Nro</th>
                     <th class="active" style = "color: black" >Estado actual</th>
                     <th class="active" style = "color: black" >Fecha de ingreso</th>
@@ -40,7 +42,8 @@ and open the template in the editor.
                     $volquetas = volquetas::listarTodas();
                     if ($row = mysqli_fetch_array($volquetas)) {
                         do {
-                            echo "<tr>";
+                            echo "<tr>";                            
+                            echo "<td><p>" . $row["circuito"] . "</p></td>";
                             echo "<td><p>" . $row["nro"] . "</p></td>";
                             echo "<td><p>" . $row['estado'] . "</p></td>";
                             echo"<td><p>" . $row['fechaIngreso'] . "</p></td>";

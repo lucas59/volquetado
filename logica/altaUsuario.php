@@ -13,13 +13,14 @@ if (isset($_POST['submit'])) {
     $passc = $_POST['passc'];
     $celular = $_POST['celular'];
     $fecha = $_POST['fecha'];
+    
+    echo "<script>console.log(".$pass.");</script>";
     if ($pass != $passc) {
         header('location: ../Vistas/altaUser.php?malPass=Verifique la contraseña');
     } 
 
     $hoy = new DateTime();
     $annos = $hoy->diff($fecha);
-
     if ($annos->y>18) {
         header('location: ../Vistas/altaUser.php?edad=verifique su edad');
     } 

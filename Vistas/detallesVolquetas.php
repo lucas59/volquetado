@@ -82,6 +82,7 @@ and open the template in the editor.
 		}
 
 	</script>
+	
 </head>
 <body style="background-color: #e4e5e6">
 	<?php  include '../Vistas/barra_menu.php';?>	
@@ -104,7 +105,7 @@ and open the template in the editor.
 			$arreglo = mysqli_fetch_array($resultado);
 		}
 		if ($arreglo) {
-			$volqueta = new volquetas($arreglo['nro'], $arreglo['lat'], $arreglo['long'], $arreglo['fechaIngreso'], $arreglo['estado']);
+			$volqueta = new volquetas($arreglo['nro'], $arreglo['lat'], $arreglo['lng'], $arreglo['fechaIngreso'], $arreglo['estado']);
 		}
 	}
 	?>
@@ -112,7 +113,8 @@ and open the template in the editor.
 		<div style="width: auto">
 			<ul style="padding-left: 0px">
 				<li class="list-group-item"><h5>Volqueta número <?php echo $volqueta->getNro() ?></h5></li>
-				<li class="list-group-item">Estado actual: <?php echo $volqueta->getEstado() ?></li>
+				<li class="list-group-item">Estado fisico actual: <?php echo $volqueta->getEstado() ?></li>
+				<li class="list-group-item">Estado del contenido: <?php echo $volqueta->getEstado() ?></li>
 				<li class="list-group-item">Fecha de ingreso: <?php echo $volqueta->getFechaIngreso() ?></li>
 				<li class="list-group-item">Latitud: <?php echo $volqueta->getLat()?></li>
 				<li class="list-group-item">Longitud: <?php echo $volqueta->getLong() ?></li>

@@ -16,13 +16,13 @@ if(isset(($_POST['accion']))){
         if ($existe==true) {
             echo "yaesta";        
         }else{
-        $resultado = volquetas::agregarVolqueta($numero,$lat,$long,$fecha,$circuito);
-        if($resultado==true){
-            echo "exito";
-        }else{
-            echo "fallo";
-        }       
-       }
-   }
+            $resultado = volquetas::agregarVolqueta($numero,$lat,$long,$fecha,$circuito);
+            if($resultado==true){
+                echo "exito";
+            }else{
+                echo "fallo";
+            }       
+        }
+    }
 }
 ?>

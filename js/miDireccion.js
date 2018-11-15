@@ -1,7 +1,7 @@
 var map;
 var faisalabad = {lat: -32.3209812, lng: -58.0799678};
 var marcadores = [];
-var infoWindows;
+var infoWindows =null;
 var marcador = null;
 
 function agregarVolqueta(nro,lat,long,fecha,estado){
@@ -82,20 +82,20 @@ function initMap() {
     console.log(marcadores.length);
     for(var i=0;i<marcadores.length;i++){
         infoWindows=new google.maps.InfoWindow({
-           content:marcadores[i][0].toString() 
-       });
+            content:'Circuito: ' + marcadores[i][4].toString()+ '<br> Numero: '+ marcadores[i][0].toString()
+     });
         new google.maps.Marker({
             position: new google.maps.LatLng(marcadores[i][1],marcadores[i][2]),
             title:marcadores[i][0].toString(),
-        icon:{
-            url: "../Imagenes/volqueta.png",
-            scaledSize: new google.maps.Size(29,35)
-        },
-        map: map
-    }).addListener("click",function(){
-        clickVolqueta(this);
-    });
-}   
+            icon:{
+                url: "../Imagenes/volqueta.png",
+                scaledSize: new google.maps.Size(29,35)
+            },
+            map: map
+        }).addListener("click",function(){
+            clickVolqueta(this);
+        });
+    }   
 
 
  //  addYourLocationButton(map, myMarker);

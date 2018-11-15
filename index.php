@@ -25,7 +25,7 @@
         }
         ?>
     </head>
-    <body style="background-color: #3295e7">
+    <body style="background-color: #e4e5e6">
         <?php
         require 'logica/usuario.php';
         session_start();

@@ -79,8 +79,7 @@ class volquetas {
         ini_set("display_errors", 1);
         error_reporting(E_ALL & ~E_NOTICE);
         $volquetas = [];
-        $stmt = DB::conexion()->prepare(
-            "SELECT * from volquetas");
+        $stmt = DB::conexion()->prepare("SELECT * from volquetas");
         $stmt->execute();
         $resultado = $stmt->get_result();
         while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
