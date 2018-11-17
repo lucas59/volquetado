@@ -3,13 +3,12 @@
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" type="text/css"/>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/registrar.css">
-    <script type="text/javascript" src="../js/jquery-3.31.min.js"></script>
-    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
     <title>Administrador de volquetas</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <?php
-   
+
     require ('../conexion/abrir_conexion.php');
     require ('../logica/volquetas.php');
     include '../logica/circuito.php';
@@ -29,6 +28,11 @@
                 padding: 0;
             }
         </style>
+        <?php 
+        if (isset($_SESSION["user"])!=null){
+            header('location: ../index.php');
+        }  
+        ?>
     </head>
     <body style="background-color: #e4e5e6">
         <?php include '../Vistas/barra_menu.php'; ?>

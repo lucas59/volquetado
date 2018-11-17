@@ -1,4 +1,5 @@
 <?php 
+require('../conexion/abrir_conexion.php');
 class circuito  {
 
 	private $codigo;
@@ -16,7 +17,8 @@ class circuito  {
 	}
 
 	public static function listarCircuitos() {
-        $conexion = DB::conexion();
-        return $resultado = mysqli_query($conexion, "SELECT * FROM circuito");
-    }
-} ?>
+		$conexion = DB::conexion();
+		return $resultado = mysqli_query($conexion, "SELECT * FROM circuito");
+	}
+}
+?>
