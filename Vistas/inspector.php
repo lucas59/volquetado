@@ -19,17 +19,20 @@
             ?>
             <div class="modal-body centrar">
                 <?php 
-                if ($row = mysqli_fetch_array($circuitos)) {
-                    do{
-                        ?>
-                        <div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/inspeccionarCircuito.php"><?php $row['recorrido'] ?></a>
-                        </div>
-                        <?php
-                    }while ($row = mysqli_fetch_array($circuitos));
+
+                while ($row = mysqli_fetch_array($circuitos)) {
+                    echo "<script>console.log('".$row["recorrido"]."')</script>";
+
+                    $recorrido=$row['recorrido'];
+                    echo "<script>console.log('".$recorrido."')</script>";
+
+                    echo "<div class=\"btn btn-primary btn-block\">";
+                    echo "<a style=\"color: #ffff; padding-left: 50%;padding-right: 50%;\" href=\"../Vistas/inspeccionarCircuito.php?numero=".$recorrido."\">";
+                    echo $row['recorrido'];
+                    echo "</a>";
+                    echo "</div>";       
                 }
                 ?>
-                <div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/consultaListaVolqueta.php"></a>
-                </div>
             </div>
         </div>
     </div>

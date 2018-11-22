@@ -23,14 +23,24 @@ class volquetas {
     private $lat;
     private $long;
     private $fechaIngreso;
-    private $estado;
+    private $estadoFisico;
+    private $estadoContenido;
 
-    function __construct($nro="0", $lat="0", $long="0", $fechaIngreso="",$estado="") {
+    function __construct($nro="0", $lat="0", $long="0", $fechaIngreso="",$estadoFisico="",$estadoContenido="",$circuito="") {
         $this->nro = $nro;
         $this->lat = $lat;
         $this->long = $long;
         $this->fechaIngreso=$fechaIngreso;
-        $this->estado = $estado;
+        $this->estadoFisico = $estadoFisico;
+        $this->estadoContenido = $estadoContenido;
+        $this->circuito = $circuito;
+
+    }
+
+
+
+    function getCircuito() {
+        return $this->circuito;
     }
 
     function getNro() {
@@ -50,8 +60,18 @@ class volquetas {
     }
 
 
-    function getEstado() {
-        return $this->estado;
+    function getEstadoFisico() {
+        return $this->estadoFisico;
+    }
+
+
+    function getEstadoContenido() {
+        return $this->estadoContenido;
+    }
+
+
+    function setCircuito($nro) {
+        $this->circuito= $circuito;
     }
 
     function setNro($nro) {
@@ -71,8 +91,12 @@ class volquetas {
     }
 
 
-    function setEstado($estado) {
-        $this->estado = $estado;
+    function setEstadoFisico($estadoFisico) {
+        $this->estadoFisico = $estadoFisico;
+    }
+
+    function setEstadoContenido($estadoContenido) {
+        $this->estadoContenido = $estadoContenido;
     }
 
     public function getVolquetas() {
@@ -83,17 +107,18 @@ class volquetas {
         $stmt->execute();
         $resultado = $stmt->get_result();
         while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
-            $datosVolquetas = new volquetas($fila->nro,$fila->lat,$fila->lng,$fila->fechaIngreso,$fila->estado);
+            $datosVolquetas = new volquetas($fila->nro,$fila->lat,$fila->lng,$fila->fechaIngreso,$fila->estadoFisico,$fila->estadoContenido,$fila->circuito);
             $volquetas[] = $datosVolquetas;
         }
         return $volquetas;
     }
     public function agregarVolqueta($nro,$lat,$long,$fecha,$circuito){
-        $conexion = DB::conexion()->prepare("INSERT INTO volquetas(nro,lat,lng,fechaIngreso,estado,circuito) VALUES (?,?,?,?,?,?)");
+        $conexion = DB::conexion()->prepare("INSERT INTO volquetas(nro,lat,lng,fechaIngreso,estadoFisico,estadoContenido,circuito) VALUES (?,?,?,?,?,?,?)");
         $normal = "Normal";
+        $vacio = "Vacio";
         $l=(double)$lat;
         $l2=(double)$long;
-        $conexion->bind_param("sddsss",$nro,$l,$l2,$fecha,$normal,$circuito);
+        $conexion->bind_param("sddssss",$nro,$l,$l2,$fecha,$normal,$vacio,$circuito);
         if($conexion->execute()){
             return true;
         }else{
@@ -122,13 +147,4 @@ class volquetas {
             return false;
         }
     }
-
-    public function datosVolqueta($nro) {
-        $stmt = DB::conexion()->prepare("SELECT nro, fechaIngreso,estado  FROM volquetas where nro='" . $nro . "'");
-        $stmt->execute();
-        $volqueta = $stmt->get_result();
-        $volqueta_obj = $volqueta->fetch_object();
-        return $volqueta_obj;
-    }
-
 }

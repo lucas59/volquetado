@@ -5,8 +5,8 @@ var infoWindows = [];
 var marcador = null;
 var ultimoInfoWindows = null;
 
-function agregarVolqueta(nro,lat,long,fecha,estado){
-    marcadores.push([nro,lat,long,fecha,estado]);
+function agregarVolqueta(nro,lat,long,fecha,estadoF,estadoC,circuito){
+    marcadores.push([nro,lat,long,fecha,estadoF,estadoC,circuito]);
 }
 
 function clickVolqueta(volqueta){
@@ -90,7 +90,7 @@ function initMap() {
     
     let i;
     for(i=0;i<marcadores.length;i++){
-        infoWindows.push( new google.maps.InfoWindow({title:marcadores[i][0],content:'Circuito: ' + marcadores[i][4].toString()+ '<br> Numero: '+ marcadores[i][0].toString()}));
+        infoWindows.push( new google.maps.InfoWindow({title:marcadores[i][0],content:'Circuito: ' + marcadores[i][6].toString()+ '<br> Numero: '+ marcadores[i][0].toString()}));
         new google.maps.Marker({
             position: new google.maps.LatLng(marcadores[i][1],marcadores[i][2]),
             title:marcadores[i][0].toString(),
@@ -103,7 +103,4 @@ function initMap() {
             clickVolqueta(this);
         });
     }   
-
-
- //  addYourLocationButton(map, myMarker);
 }

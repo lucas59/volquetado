@@ -16,7 +16,7 @@
             </div>
             <div class="modal-body centrar">
                 <div class="btn btn-primary btn-block" ><a style="color: #ffff" href="../Vistas/consultaListaVolqueta.php">Ver estado de una volqueta</a></div>
-                <div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/exportarDatos.php">Exportar datos</a></div>
+                <div class="btn btn-primary btn-block"><a style="color: #ffff" href="../logica/exportarDatosAbiertos.php">Exportar datos</a></div>
             </div>
         </div>
     </div>

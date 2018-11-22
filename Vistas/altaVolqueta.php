@@ -46,7 +46,7 @@
             ?>
 
             <script type="text/javascript">
-                agregarVolqueta('<?php echo $volquetas[$i]->getNro() ?>','<?php echo $volquetas[$i]->getLat() ?>','<?php echo $volquetas[$i]->getLong() ?>','<?php echo $volquetas[$i]->getFechaIngreso() ?>','<?php echo $volquetas[$i]->getEstado() ?>');
+                agregarVolqueta('<?php echo $volquetas[$i]->getNro() ?>','<?php echo $volquetas[$i]->getLat() ?>','<?php echo $volquetas[$i]->getLong() ?>','<?php echo $volquetas[$i]->getFechaIngreso() ?>','<?php echo $volquetas[$i]->getEstadoFisico() ?>','<?php echo $volquetas[$i]->getEstadoContenido() ?>','<?php echo $volquetas[$i]->getCircuito() ?>');
             </script>
         <?php } ?>
 
@@ -87,8 +87,7 @@
                     <div style="display: none;" id="alerta" class="alert alert-danger" role="alert">
                         <p id="mensaje"></p>
                     </div>
-                    <div style="width:50%;float: left;"><button name="close" type="submit"  class="btn btn-block btn-danger">Cancelar</button></div>
-                    <div id="submit" style="width:50%;float:right;"><button id="boton" name="submit" type="button" style="background-color: #287AE6; color : white"  class="btn btn-block">Agregar</button></div>
+                    <div id="submit" style="width:100%;float:right;"><button id="boton" name="submit" type="button" style="background-color: #287AE6; color : white"  class="btn btn-block">Agregar</button></div>
                 </div>
             </div>
             <script async defer
@@ -98,7 +97,7 @@
 
             $("#boton").click(function(e){
                 e.preventDefault();
-                console.log(e);
+                //console.log(e);
                 var circuito = document.getElementById("circuito").value;
                 var numero = document.getElementById("numero").value;
                 if (numero==="") {
@@ -118,6 +117,7 @@
                         long:marcador.getPosition().lng()
                     },
                     success: function(response){
+                        console.log(response);
                         if(response.localeCompare("exito")){
                             $("#numero").text="";
                             location.reload();
