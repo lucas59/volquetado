@@ -25,6 +25,7 @@ class reporte
 		$this->inspeccionado=$inspeccionado;
 
 	}
+
 	function getId() {
 		return $this->id;
 	}
@@ -109,5 +110,42 @@ class reporte
        }
        return $reportes;
    }
+
+   public function agregarReporte($circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota, $residuosFuera, $inspeccionado){
+   	$basuraFuera;
+   	if($residuosFuera=="true"){
+   		$basuraFuera="1";
+   	}else{
+   		$basuraFuera="0";
+   	}
+   	echo "<script>console.log(".$basuraFuera.");</script>";
+
+   	$consulta = DB::conexion()->prepare("INSERT INTO `historiavolquetas` (`id`, `circuito`, `nro`, `fecha`, `estadoFisico`, `estadoContenido`, `nota`, `contenidoFuera`, `inspeccionado`) VALUES (NULL,?,?,?,?,?,?,?,1);");
+   	$consulta->bind_param('ssssssi',$circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota,$basuraFuera);
+   	if($consulta->execute()){
+   		return true;
+   	}else{
+   		return false;
+   	}
+   }
+
+
+   public function aceptarReporte($circuito,$numero,$estadoContenido,$estadoFisico,$residuos){
+   	if($residuos=="true"){
+   		$contenidoFuera="1";
+   	}else{
+   		$contenidoFuera="0";
+   	}
+   	echo "console.log(".$contenidoFuera.")";
+   	$fecha = new DateTime();
+   	$nota = "";
+   	$fecha2=$fecha->format('Y-m-d H:i:s');
+   	$consulta = DB::conexion()->prepare("INSERT INTO `historiavolquetas` (`id`, `circuito`, `nro`, `fecha`, `estadoFisico`, `estadoContenido`, `nota`, `contenidoFuera`, `inspeccionado`) VALUES (NULL,?,?,?,?,?,?,?,1);");
+   	$consulta->bind_param('ssssssi',$circuito,$numero,$fecha2, $estadoFisico, $estadoContenido,$nota,$contenidoFuera);
+   	if($consulta->execute()){
+   		return true;
+   	}else{
+   		return false;
+   	}
+   }
 }
-?>

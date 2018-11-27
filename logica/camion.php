@@ -3,6 +3,9 @@
 /**
  * 
  */
+if(class_exists("camion"))
+    return;
+
 class camion {
 
     private $matricula;
@@ -69,6 +72,10 @@ class camion {
         } else {
             return false;
         }
+    }
+    public static function listarCamiones() {
+        $conexion = DB::conexion();
+        return $resultado = mysqli_query($conexion, "SELECT * from camion");
     }
 
 }

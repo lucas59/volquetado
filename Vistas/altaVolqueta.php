@@ -90,13 +90,14 @@
                     <div id="submit" style="width:100%;float:right;"><button id="boton" name="submit" type="button" style="background-color: #287AE6; color : white"  class="btn btn-block">Agregar</button></div>
                 </div>
             </div>
-            <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
-        </script>
-        <script type="text/javascript">
+        </div>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
+    </script>
+    <script type="text/javascript">
 
-            $("#boton").click(function(e){
-                e.preventDefault();
+        $("#boton").click(function(e){
+            e.preventDefault();
                 //console.log(e);
                 var circuito = document.getElementById("circuito").value;
                 var numero = document.getElementById("numero").value;
@@ -129,7 +130,7 @@
                         }
                     },
                     error: function(response){
-                        console.log(response);
+                        //console.log(response);
                     }
                 });
 

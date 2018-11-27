@@ -38,7 +38,7 @@
         } else if ($usuario->getCargo() == 'Gestor') {
             header('location: ../volquetado/Vistas/gestor.php');
         } else if ($usuario->getCargo() == 'Chofer') {
-            header('location: ..volquetado//Vistas/chofer.php');
+            header('location: ../volquetado/Vistas/chofer.php');
         }
     } else {
         ?>

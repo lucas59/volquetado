@@ -63,10 +63,17 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fecha" class="control-label">Fecha</label>
+                                    <label for="fecha" class="control-label">Fecha de nacimiento</label>
                                     <input type="date" name="fecha"  class="form-control" required/>
                                     <span class="help-block"></span>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="fecha" class="control-label">Vencimiento de permiso de conducción</label>
+                                    <input type="date" name="fecha"  class="form-control" required/>
+                                    <span class="help-block"></span>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="direccion" class="control-label">Direccion</label>
                                     <input type="text" name="direccion"  class="form-control" required/>

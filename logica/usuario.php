@@ -12,6 +12,8 @@
  * @author Lucas
  */
 //include '../conexion/abrir_conexion.php';
+if(class_exists("usuario"))
+    return;
 
 class usuario {
 
@@ -134,4 +136,17 @@ class usuario {
         return $edad; 
     } 
 
+    public function listarRecolectores() {
+        ini_set("display_errors", 1);
+        error_reporting(E_ALL & ~E_NOTICE);
+        $recolectores= [];
+        $stmt = DB::conexion()->prepare("SELECT * from usuarios where cargo='Recolector'");
+        $stmt->execute();
+        $resultado = $stmt->get_result();//$ci, $nombre, $apellido, $cargo, $celular, $direccion, $pass
+        while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
+            $usuario = new usuario($fila->ci,$fila->nombre,$fila->apellido,$fila->cargo,$fila->celular,$fila->direccion,$fila->pass);
+            $recolectores[] = $usuario;
+        }
+        return $recolectores;
+    }
 }
