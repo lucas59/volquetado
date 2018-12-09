@@ -90,7 +90,7 @@ function initMap() {
     
     let i;
     for(i=0;i<marcadores.length;i++){
-        infoWindows.push( new google.maps.InfoWindow({title:marcadores[i][0],content:'Circuito: ' + marcadores[i][6].toString()+ '<br> Numero: '+ marcadores[i][0].toString()}));
+        infoWindows.push( new google.maps.InfoWindow({title:marcadores[i][0],content:'Circuito: ' + marcadores[i][6].toString()+ '<br> Numero: '+ marcadores[i][0].toString()+ '<br> Estado físico: '+ marcadores[i][4].toString()}));
         new google.maps.Marker({
             position: new google.maps.LatLng(marcadores[i][1],marcadores[i][2]),
             title:marcadores[i][0].toString(),
@@ -104,3 +104,13 @@ function initMap() {
         });
     }   
 }
+
+function myLocation(){
+ if ("geolocation" in navigator){
+    navigator.geolocation.getCurrentPosition(function(position){ 
+        var pos = {lat: position.coords.latitude, lng: position.coords.longitude};
+        map.panTo(pos);
+    });
+}
+
+};

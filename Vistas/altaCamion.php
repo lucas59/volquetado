@@ -40,7 +40,7 @@
         <div class="modal-content" style=" margin-top: 18%;">
 
             <div class="modal-header centrar">
-                <h2 class="modal-title" id="myModalLabel">Agregar camion</h2>
+                <h2 class="modal-title" id="myModalLabel">Agregar camión</h2>
             </div>
             <div class="modal-body centrar">
                 <div  style="align-content: center;" class="centrar row">
@@ -48,13 +48,13 @@
                         <div class="well">
                             <form id="loginForm" action="../logica/altaCamion.php" method="POST">
                                 <div class="form-group">
-                                    <label for="padron" class="control-label">Padron</label>
-                                    <input type="text" name="padron"  class="form-control" pattern="[A-Z]" required/>
+                                    <label for="padron" class="control-label">Padrón</label>
+                                    <input type="text" name="padron"  class="form-control" required/>
                                     <span class="help-block"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="matricula" class="control-label">Matricula</label>
-                                    <input type="text" name="matricula"  class="form-control" pattern="[2-5]" required/>
+                                    <label for="matricula" class="control-label">Matrícula</label>
+                                    <input type="text" name="matricula" pattern="[A-Za-z]{3}[0-9]{3}" class="form-control" required/>
                                     <span class="help-block"></span>
                                 </div>
                                 <div class="form-group">

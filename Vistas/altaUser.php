@@ -30,7 +30,7 @@
                         <div class="well">
                             <form id="loginForm" action="../logica/altaUsuario.php" method="POST">
                                 <div class="form-group">
-                                    <label for="cedula" class="control-label">Cedula</label>
+                                    <label for="cedula" class="control-label">Cédula</label>
                                     <input type="text" name="cedula"  class="form-control"required/>
                                     <span class="help-block"></span>
                                 </div>
@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="direccion" class="control-label">Direccion</label>
+                                    <label for="direccion" class="control-label">Dirección</label>
                                     <input type="text" name="direccion"  class="form-control" required/>
                                     <span class="help-block"></span>
                                 </div>
@@ -84,7 +84,7 @@
                                     <input type="text" name="celular"  class="form-control" required/>
                                     <span class="help-block"></span>
                                 </div>
-                                <button name="submit" type="submit" style="background-color: #287AE6; color : white"  class="btn btn-block">Iniciar Sesión</button>
+                                <button name="submit" type="submit" style="background-color: #287AE6; color : white"  class="btn btn-block">Agregar usuario</button>
                             </form>
                         </div>
                     </div>

@@ -53,7 +53,7 @@
                             <div class="well">
                                 <form id="loginForm" action="logica/manejadorLogin.php" method="POST">
                                     <div class="form-group">
-                                        <label for="username" class="control-label">Cedula</label>
+                                        <label for="username" class="control-label">Cédula</label>
                                         <input type="text" name="user" id="inputEmail" class="form-control" placeholder="Cedula..." required autofocus>
                                         <span class="help-block"></span>
                                     </div>

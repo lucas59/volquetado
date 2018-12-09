@@ -37,7 +37,8 @@
     <body style="background-color: #e4e5e6">
         <?php include '../Vistas/barra_menu.php'; ?>
         <br>
-        <div id="map"></div>
+        <div style="position: absolute;" id="map"></div>
+        <img onclick="myLocation()" id="myLocation" src="../Imagenes/mylocation.png" style="max-width:100%;width:10%;height:10%;position: relative;"/>
         <script type="text/javascript" src="../js/miDireccion.js"></script>
         <?php
         $volquetas = (new volquetas())->getVolquetas();
@@ -50,6 +51,31 @@
             </script>
         <?php } ?>
 
+        <!--*******************************************************************************-->
+        <div class="modal fade" id="modalRetornoExito" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Volqueta ingresada.</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--*******************************************************************************-->
+        <!--*******************************************************************************-->
+        <div class="modal fade" id="modalRetornoFallo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Ya existe esta volqueta.</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--*******************************************************************************-->
+        
         <!-- Modal -->
         <div id="myModal" class="modal fade container-fluid" role="dialog">
             <div class="modal-dialog">
@@ -72,7 +98,7 @@
                                 <select id="circuito">
                                     <?php
                                     do {
-                                        echo "<option>" . $row['recorrido'] . "</option>";
+                                        echo "<option>" . $row['circuito'] . "</option>";
                                     } while ($row = mysqli_fetch_array($circuito));
                                     ?>
                                 </select>
@@ -103,7 +129,7 @@
                 var numero = document.getElementById("numero").value;
                 if (numero==="") {
                     $("#alerta").show();
-                    $("#mensaje").text("Debe ingresar el numero de la volqueta a agregar.");
+                    $("#mensaje").text("Debe ingresar el número de la volqueta a agregar.");
                     return;
                 }
 
@@ -121,10 +147,11 @@
                         console.log(response);
                         if(response.localeCompare("exito")){
                             $("#numero").text="";
+                            $("#myModal").modal('hide');
+                            $("#modalRetornoExito").modal();
                             location.reload();
                         }else if(response.localeCompare("yaesta")){
-                            $("#alerta").show();
-                            $("#mensaje").text("Esta volqueta ya a sido registrada anteriormente.");
+                            $("#modalRetornoFallo").modal();
                         }else if(response.localeCompare("error")){
 
                         }
@@ -135,10 +162,6 @@
                 });
 
             });
-
-
-
         </script>
-
     </body>
     </html>

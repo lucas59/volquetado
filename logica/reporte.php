@@ -100,7 +100,7 @@ class reporte
 	}
 	public function listarVolquetaSinInspeccionar($circuito){
 		$reportes=[];
-		$consulta = DB::conexion()->prepare("select * from historiavolquetas as hvv where fecha IN (select MAX(fecha) from historiavolquetas as hv where hv.circuito=hvv.circuito and hv.nro=hvv.nro)  and circuito = ? and inspeccionado=0 GROUP BY nro ORDER BY fecha DESC");
+		$consulta = DB::conexion()->prepare("select * from historiavolquetas as hvv where fecha IN (select MAX(fecha) from historiavolquetas as hv where hv.circuito=hvv.circuito and hv.nro=hvv.nro)  and circuito = ? GROUP BY nro ORDER BY fecha DESC");
 		$consulta->bind_param("s",$circuito);
 		$consulta->execute();
 		$resultado = $consulta->get_result();
@@ -123,11 +123,38 @@ class reporte
    	$consulta = DB::conexion()->prepare("INSERT INTO `historiavolquetas` (`id`, `circuito`, `nro`, `fecha`, `estadoFisico`, `estadoContenido`, `nota`, `contenidoFuera`, `inspeccionado`) VALUES (NULL,?,?,?,?,?,?,?,1);");
    	$consulta->bind_param('ssssssi',$circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota,$basuraFuera);
    	if($consulta->execute()){
-   		return true;
+   		$actualizar=DB::conexion()->prepare("UPDATE `volquetas` SET `estadoFisico` = ?, `estadoContenido` = ? WHERE `volquetas`.`circuito` = ? and `volquetas`.`nro` = ?;");
+   		$actualizar->bind_param('ssss',$estadoFisico,$estadoContenido,$circuito,$numero);
+   		if($actualizar->execute()){
+   			return true;	
+   		}	
    	}else{
    		return false;
    	}
    }
+
+   public function nuevoReporte($circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota, $residuosFuera, $inspeccionado){
+   	$basuraFuera;
+   	if($residuosFuera=="true"){
+   		$basuraFuera="1";
+   	}else{
+   		$basuraFuera="0";
+   	}
+   	echo "<script>console.log(".$basuraFuera.");</script>";
+
+   	$consulta = DB::conexion()->prepare("INSERT INTO `historiavolquetas` (`id`, `circuito`, `nro`, `fecha`, `estadoFisico`, `estadoContenido`, `nota`, `contenidoFuera`, `inspeccionado`) VALUES (NULL,?,?,?,?,?,?,?,?);");
+   	$consulta->bind_param('sssssssi',$circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota,$basuraFuera,$inspeccionado);
+   	if($consulta->execute()==true){
+   		$actualizar=DB::conexion()->prepare("UPDATE `volquetas` SET `estadoFisico` = ?, `estadoContenido` = ? WHERE `volquetas`.`circuito` = ? and `volquetas`.`nro` = ?;");
+   		$actualizar->bind_param('ssss',$estadoFisico,$estadoContenido,$circuito,$numero);
+   		if($actualizar->execute()){
+   			return true;	
+   		}
+   	}else{
+   		return false;
+   	}
+   }
+
 
 
    public function aceptarReporte($circuito,$numero,$estadoContenido,$estadoFisico,$residuos){

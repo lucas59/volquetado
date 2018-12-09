@@ -1,18 +1,14 @@
 $("#iniciar").click(function(){
 	var circuito = document.getElementById("circuito").value;
-	var camion=getRadioButtonSelectedValue(document.camiones.camion);
-	var arreglo = camion.split("-");
-	var padron= arreglo[0];
-	var matricula= arreglo[1]; 
+	var camion= document.getElementById("vehiculos").value;
+	console.log(camion);
 	var recolectores=getRecolectores(document.recolectores);
-
 	$.ajax({
 		url: '../logica/iniciarCircuito.php',
 		type: 'POST',
 		data: {
 			circuito:circuito,
-			padronCamion:padron,
-			matriculaCamion:matricula,
+			camion:camion,
 			recolectores:recolectores
 		},
 		success: function(response){
@@ -38,7 +34,6 @@ function getRadioButtonSelectedValue(ctrl)
 		if(ctrl[i].checked) 
 			return ctrl[i].value;
 	}
-
 
 	function getRecolectores(ctrl){
 		var arreglo=[];

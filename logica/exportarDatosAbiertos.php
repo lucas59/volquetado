@@ -19,7 +19,7 @@ if($resultado->num_rows > 0){
     
     //output each row of the data, format line as csv and write to file pointer
     while($row = $resultado->fetch_assoc()){
-        $lineData = array($row['circuito'], $row['nro'], $row['estado'], $row['fechaIngreso'], $row['lat'], $row['lng']."\r\n");
+        $lineData = array($row['circuito'], $row['nro'], $row['estadoFisico'], $row['fechaIngreso'], $row['lat'], $row['lng']."\r\n");
         fputcsv($f, $lineData, $delimiter);
     }
     

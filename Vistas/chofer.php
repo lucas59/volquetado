@@ -51,31 +51,31 @@
 				<div style="display:inline-block;" id="recolectores">
 					<h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Recolectores</h4>
 					<form name="recolectores">
-					<?php
-					$recolectores = usuario::listarRecolectores();
-					for ($i = 0; $i < count($recolectores); $i++) {									
-						echo "<input value=\"".$recolectores[$i]->getCi()."\" name=\"recolector\" type=\"checkbox\" checked=\"checked\">";
-						echo "<label>".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</label>";
-						echo("<br>");
-					}?>
+						<?php
+						$recolectores = usuario::listarRecolectores();
+						for ($i = 0; $i < count($recolectores); $i++) {									
+							echo "<input value=\"".$recolectores[$i]->getCi()."\" name=\"recolector\" type=\"checkbox\" checked=\"checked\">";
+							echo "<label>".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</label>";
+							echo("<br>");
+						}?>
 					</form>
 				</div>
 
 				<div style="float: right;" id="camiones">
 					<h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Camión</h4>
-					<form name="camiones">
 					<?php
 					$camiones = camion::listarCamiones();
 					if ($row = mysqli_fetch_array($camiones)) {
-						?><?php
-						do {
-							echo "<input value=\"".$row['padron']."-".$row['matricula']."\" name=\"camion\" style=\"text-align: center;margin-left: auto\"  checked=\"checked\" type=\"radio\">";
-							echo "<label style=\"text-align: center;margin-left: auto\">".$row['padron']."-".$row['matricula']."</label>";
-							echo("<br>");
-						} while ($row = mysqli_fetch_array($camiones));
 						?>
+						<select id="vehiculos">
+							<?php
+							do {
+								echo "<option>".$row['matricula']."</option>";
+								echo("<br>");
+							} while ($row = mysqli_fetch_array($camiones));
+							?>
+						</select>
 					<?php } ?>
-					</form>
 				</div>
 
 			</div>

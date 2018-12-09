@@ -112,6 +112,23 @@ class volquetas {
         }
         return $volquetas;
     }
+
+    public function listarVolquetasDeCircuito($circuito){
+        ini_set("display_errors", 1);
+        error_reporting(E_ALL & ~E_NOTICE);
+        $volquetas = [];
+        $stmt = DB::conexion()->prepare("SELECT * from volquetas where circuito=?");
+        $stmt->bind_param("s",$circuito);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
+            $datosVolquetas = new volquetas($fila->nro,$fila->lat,$fila->lng,$fila->fechaIngreso,$fila->estadoFisico,$fila->estadoContenido,$fila->circuito);
+            $volquetas[] = $datosVolquetas;
+        }
+        return $volquetas;
+    }
+
+
     public function agregarVolqueta($nro,$lat,$long,$fecha,$circuito){
         $conexion = DB::conexion()->prepare("INSERT INTO volquetas(nro,lat,lng,fechaIngreso,estadoFisico,estadoContenido,circuito) VALUES (?,?,?,?,?,?,?)");
         $normal = "Normal";

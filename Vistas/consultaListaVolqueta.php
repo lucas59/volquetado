@@ -45,7 +45,7 @@ and open the template in the editor.
                             echo "<tr>";                            
                             echo "<td><p>" . $row["circuito"] . "</p></td>";
                             echo "<td><p>" . $row["nro"] . "</p></td>";
-                            echo "<td><p>" . $row['estado'] . "</p></td>";
+                            echo "<td><p>" . $row['estadoFisico'] . "</p></td>";
                             echo"<td><p>" . $row['fechaIngreso'] . "</p></td>";
                             echo "<td><button onClick=\"window.location.href='../Vistas/detallesVolquetas.php?numero=".$row["nro"]."'\" style=\"background:url('../Imagenes/ver.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
 

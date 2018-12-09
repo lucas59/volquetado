@@ -1,18 +1,19 @@
 <?php 
 require ('../logica/recorrido.php');
 include '../logica/usuario.php';
+include '../logica/camion.php';
 session_start();
 if(isset($_SESSION['user'])){
 	if(isset($_POST['circuito'])){
 		$chofer=$_SESSION['user'];
 		$circuito = $_POST["circuito"];
-		$padron= $_POST["padronCamion"];
-		$matricula = $_POST["matriculaCamion"];
+		$matricula= $_POST["camion"];
 		$recolectores = $_POST["recolectores"];
 		$inicio= new DateTime();
-		$recorrido=new recorrido($circuito, $padron, $matricula, $chofer->getCi(), $recolectores[0], $recolectores[1], $inicio,$inicio);
+		$camion = camion::buscarCamion($matricula);
+		$recorrido=new recorrido($circuito, $camion->getPadron(), $camion->getMatricula(), $chofer->getCi(), $recolectores[0], $recolectores[1], $inicio,$inicio);
 		$_SESSION['recorrido'] = $recorrido;
-		$resultado=recorrido::agregarRecorrido($circuito, $padron, $matricula, $chofer->getCi(), $recolectores[0], $recolectores[1], $inicio,$inicio);
+		$resultado=recorrido::agregarRecorrido($circuito, $camion->getPadron(), $camion->getMatricula(), $chofer->getCi(), $recolectores[0],$recolectores[1],$inicio,$inicio);
 		if($recorrido){
 			echo "inicio";
 		}else{

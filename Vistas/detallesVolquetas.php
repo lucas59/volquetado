@@ -105,7 +105,7 @@ and open the template in the editor.
 			$arreglo = mysqli_fetch_array($resultado);
 		}
 		if ($arreglo) {
-			$volqueta = new volquetas($arreglo['nro'], $arreglo['lat'], $arreglo['lng'], $arreglo['fechaIngreso'], $arreglo['estado']);
+			$volqueta = new volquetas($arreglo['nro'], $arreglo['lat'], $arreglo['lng'], $arreglo['fechaIngreso'], $arreglo['estadoFisico'],$arreglo['estadoContenido']);
 		}
 	}
 	?>
@@ -113,8 +113,8 @@ and open the template in the editor.
 		<div style="width: auto">
 			<ul style="padding-left: 0px">
 				<li class="list-group-item"><h5>Volqueta número <?php echo $volqueta->getNro() ?></h5></li>
-				<li class="list-group-item">Estado fisico actual: <?php echo $volqueta->getEstado() ?></li>
-				<li class="list-group-item">Estado del contenido: <?php echo $volqueta->getEstado() ?></li>
+				<li class="list-group-item">Estado físico actual: <?php echo $volqueta->getEstadoFisico() ?></li>
+				<li class="list-group-item">Estado del contenido: <?php echo $volqueta->getEstadoContenido() ?></li>
 				<li class="list-group-item">Fecha de ingreso: <?php echo $volqueta->getFechaIngreso() ?></li>
 				<li class="list-group-item">Latitud: <?php echo $volqueta->getLat()?></li>
 				<li class="list-group-item">Longitud: <?php echo $volqueta->getLong() ?></li>
@@ -130,10 +130,9 @@ and open the template in the editor.
 
 					<th class="active" style = "color: black" >Nro registro</th>   
 					<th class="active" style = "color: black" >Fecha de registro</th>
-					<th class="active" style = "color: black" >Hora</th>
-					<th class="active" style = "color: black" >Estado fisico</th>
+					<th class="active" style = "color: black" >Estado físico</th>
 					<th class="active" style = "color: black" >Estado del contenido</th>
-					<th class="active" style = "color: black" >Reciduos fuera</th>
+					<th class="active" style = "color: black" >Residuos fuera</th>
 					<th class="active" style = "color: black" >Descripción</th>
 				</tr>
 			</thead>
@@ -145,7 +144,6 @@ and open the template in the editor.
 						echo "<tr>";
 						echo "<td><p>" . $row["id"] . "</p></td>";
 						echo "<td><p>" . $row["fecha"] . "</p></td>";
-						echo "<td><p>" . $row["hora"] . "</p></td>";
 						echo "<td><p>" . $row['estadoFisico'] . "</p></td>";
 						echo"<td><p>" . $row['estadoContenido'] . "</p></td>";
 						if($row['contenidoFuera']==1){
@@ -170,15 +168,14 @@ and open the template in the editor.
 	<div id="myModal" class="modal fade container-fluid" role="dialog">
 		?>
 
-		<div style="width: 100%;height: 100%" class="modal-dialog">
+		<div style="width: 100%;height: auto" class="modal-dialog">
 			<div style="height: 90%;width: 100%;" class="modal-content">
 				<div class="modal-header">
 					<h4 style="font" class="modal-title">Ubicación</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<div style="width:100%;height:400px;" id="mapa"></div><br>
-					<div id="submit"><button name="submit" type="submit" style="background-color: #287AE6; color : white"  class="btn btn-block">Volver</button></div>
+					<div style="width:100%;height:400px;" id="mapa"></div><br>	
 				</div>
 			</div>
 

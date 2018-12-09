@@ -26,14 +26,30 @@ if (isset($_POST["accion"])) {
 		$estadoContenido=$_POST["estadoContenido"];
 		$estadoFisico=$_POST["estadoFisico"];
 		$residuos=$_POST["residuos"];
+		echo "<script>console.log(".$numero.")</script>";
 		$resultado = reporte::aceptarReporte($circuito,$numero,$estadoContenido,$estadoFisico,$residuos);
 		if($resultado==true){
 			echo true;
 		}else{
 			echo false;
 		}
+	}else if($accion=="nuevoReporte"){
+		$circuito=$_POST["circuito"];
+		$volqueta=$_POST["volqueta"];
+		$estadoContenido=$_POST["estadoContenido"];
+		$estadoFisico=$_POST["estadoFisico"];
+		$residuos=$_POST["residuos"];
+		$nota=$_POST["nota"];
+		$fecha = new DateTime();
+		$inspeccionado=1;
+		$resultado = reporte::nuevoReporte($circuito,$volqueta,$fecha->format('Y-m-d H:i:s'),$estadoFisico,$estadoContenido,$nota,$residuos,$inspeccionado);
+		if($resultado==true){
+			echo 1;
+		}else{
+			echo 0;
+		}
+		return;
 	}
-	return;
 }
 
 ?>
