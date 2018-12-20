@@ -159,13 +159,27 @@ class volquetas {
         return $volquetas;
     }
 
+    public function listarVolquetasPorCircuito($circuito){
+        ini_set("display_errors", 1);
+        error_reporting(E_ALL & ~E_NOTICE);
+        $volquetas = [];
+        $stmt = DB::conexion()->prepare("SELECT * from volquetas where circuito=?");
+        $stmt->bind_param("s",$circuito);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
+            $datosVolquetas = new volquetas($fila->nro,$fila->lat,$fila->lng,$fila->fechaIngreso,$fila->estadoFisico,$fila->estadoContenido,$fila->circuito,$fila->activa);
+            $volquetas[] = $datosVolquetas;
+        }
+        return $volquetas;
+    }
+
     public function listarVolquetasParaMostrar($circuito){
         $volquetas = [];
         $stmt = DB::conexion()->prepare("SELECT * from volquetas");
         $stmt->execute();
         $resultado = $stmt->get_result();
         if($circuito=='Todos'){
-
         while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
             $datosVolquetas = new volquetas($fila->nro,$fila->lat,$fila->lng,$fila->fechaIngreso,$fila->estadoFisico,$fila->estadoContenido,$fila->circuito,$fila->activa);
             $volquetas[] = $datosVolquetas;

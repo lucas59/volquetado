@@ -46,8 +46,9 @@ if(isset(($_POST['accion']))){
         return;
     }else if($accion=="listarVolquetas"){
         $circuito=$_POST['circuito'];
-        $arreglo=volquetas::listarVolquetasDeCircuito($circuito);
-        echo json_encode($arreglo);
+        echo $circuito;
+        $arreglo=volquetas::listarVolquetasPorCircuito($circuito);
+        print json_encode($arreglo);
     }
 }
 ?>
