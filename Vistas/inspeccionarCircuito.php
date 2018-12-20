@@ -86,10 +86,9 @@ and open the template in the editor.
               
             }
             echo "<td><p>" . $reporte[$i]->getNota() . "</p></td>";
-
             echo "<td><button onclick=reportar('".$reporte[$i]->getCircuito()."','".$reporte[$i]->getNro()."') id=\"reportar\" style=\"background:url('../Imagenes/reportar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
             if($reporte[$i]->getInspeccion()==false){
-              echo "<td><button onclick=aceptarDatos('".$reporte[$i]->getCircuito()."','".$reporte[$i]->getNro()."','".$reporte[$i]->getEstadoFisico()."','".$reporte[$i]->getEstadoContenido()."','".$reporte[$i]->getContenidoFuera()."') style=\"background:url('../Imagenes/ok.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+              echo "<td><button onclick=aceptarDatos('".$reporte[$i]->getCircuito()."','".$reporte[$i]->getNro()."','".$reporte[$i]->getEstadoFisico()."','".$reporte[$i]->getEstadoContenido()."','".$reporte[$i]->getContenidoFuera()."') style=\"background:url('../Imagenes/ok.png');background-position:center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
             }
             echo "</tr>";
             //}

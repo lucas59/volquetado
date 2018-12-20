@@ -120,8 +120,8 @@ class reporte
    	}
    	echo "<script>console.log(".$basuraFuera.");</script>";
 
-   	$consulta = DB::conexion()->prepare("INSERT INTO `historiavolquetas` (`id`, `circuito`, `nro`, `fecha`, `estadoFisico`, `estadoContenido`, `nota`, `contenidoFuera`, `inspeccionado`) VALUES (NULL,?,?,?,?,?,?,?,1);");
-   	$consulta->bind_param('ssssssi',$circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota,$basuraFuera);
+   	$consulta = DB::conexion()->prepare("INSERT INTO `historiavolquetas` (`id`, `circuito`, `nro`, `fecha`, `estadoFisico`, `estadoContenido`, `nota`, `contenidoFuera`, `inspeccionado`) VALUES (NULL,?,?,?,?,?,?,?,?);");
+   	$consulta->bind_param('ssssssii',$circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota,$basuraFuera,$inspeccionado);
    	if($consulta->execute()){
    		$actualizar=DB::conexion()->prepare("UPDATE `volquetas` SET `estadoFisico` = ?, `estadoContenido` = ? WHERE `volquetas`.`circuito` = ? and `volquetas`.`nro` = ?;");
    		$actualizar->bind_param('ssss',$estadoFisico,$estadoContenido,$circuito,$numero);

@@ -13,13 +13,15 @@ class camion {
     private $marca;
     private $modelo;
     private $tipo;
+    private $vivo;
 
-    function __construct($padron,$matricula, $marca, $modelo, $tipo) {
+    function __construct($padron,$matricula, $marca, $modelo, $tipo, $vivo) {
         $this->padron=$padron;
         $this->matricula = $matricula;
         $this->marca = $marca;
         $this->modelo = $modelo;
         $this->tipo = $tipo;
+        $this->vivo=$vivo;
     }
 
     function getMatricula() {
@@ -40,6 +42,11 @@ class camion {
         return $this->tipo;
     }
 
+    function getVivo() {
+        return $this->vivo;
+    }
+
+
     function setMatricula($matricula) {
         $this->matricula = $matricula;
     }
@@ -59,21 +66,46 @@ class camion {
         $this->tipo = $tipo;
     }
 
-    public static function existeCamion($padron,$matricula) {
-        $consulta = DB::conexion()->prepare("select * from camion where padron=? AND matricula=?");
-        $consulta->bind_param("ss",$padron,$matricula);
-        $consulta->execute();
-        $resultado = $consulta->get_result();
-        if ($resultado->num_rows == 1) {
+    function setVivo($vivo) {
+        $this->vivo = $vivo;
+    }
+    
+    public function habilidatCamion($padron,$matricula,$marca,$modelo,$tipo){
+        $consulta=DB::conexion()->prepare("UPDATE camion SET vivo = '1', marca =?,modelo=?,tipo=? WHERE padron = ? AND matricula = ?");
+        $consulta->bind_param('sssss',$marca,$modelo,$tipo,$padron,$matricula);
+        if($consulta->execute()){
             return true;
-        } else if ($resultado->num_rows == 0) {
+        }else{
             return false;
         }
     }
 
+    public static function existeCamion($padron,$matricula) {
+        $retorno;
+        $consulta = DB::conexion()->prepare("select * from camion where padron=? AND matricula=?");
+        $consulta->bind_param("ss",$padron,$matricula);
+        $consulta->execute();
+        //
+        $resultado = $consulta->get_result();
+        if($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
+            $camion=new camion($fila->padron,$fila->matricula,$fila->marca,$fila->modelo,$fila->tipo,$fila->vivo);
+        }
+        //
+        if ($camion) {
+            if($camion->getVivo()==1){
+                $retorno=1;
+            }else {
+                $retorno=2;
+            }
+        } else {
+            $retorno=0;
+        }
+        return $retorno;
+    }
+
     public static function ingresar($padron,$matricula, $marca, $modelo, $tipo) {
         $conexion = DB::conexion();
-        $sql = "INSERT INTO camion (padron,matricula, marca, modelo, tipo) VALUES('$padron','$matricula','$marca','$modelo','$tipo')";
+        $sql = "INSERT INTO camion (padron,matricula, marca, modelo, tipo,vivo) VALUES('$padron','$matricula','$marca','$modelo','$tipo',1)";
         $resultado = mysqli_query($conexion, $sql);
         if ($resultado == TRUE) {
             return true;
@@ -81,10 +113,11 @@ class camion {
             return false;
         }
     }
-    public static function listarCamiones() {
+    public function listarCamiones() {
         $conexion = DB::conexion();
         return $resultado = mysqli_query($conexion, "SELECT * from camion");
     }
+
     public function buscarCamion($matricula){
         $consulta=DB::conexion()->prepare("SELECT * FROM camion where matricula=?");
         $consulta->bind_param("s",$matricula);
@@ -92,11 +125,19 @@ class camion {
         $resultado = $consulta->get_result();
         $camion;
         if($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado como un objeto
-            $camion=new camion($fila->padron,$fila->matricula,$fila->marca,$fila->modelo, $fila->tipo);
+            $camion=new camion($fila->padron,$fila->matricula,$fila->marca,$fila->modelo, $fila->tipo,$fila->vivo);
         }
         return $camion;
     }
-
+    public function borrarCamion($padron,$matricula){
+       $consulta=DB::conexion()->prepare("UPDATE camion SET vivo = '0' WHERE padron = ? AND matricula = ?");
+       $consulta->bind_param('ss',$padron,$matricula);
+       if($consulta->execute()){
+        return true;
+    }else{
+        return false;
+    }
+}
 }
 
 ?>

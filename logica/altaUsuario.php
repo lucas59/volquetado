@@ -1,46 +1,42 @@
 <?php
-
-require ('../conexion/abrir_conexion.php');
 require ('../logica/usuario.php');
+require_once ('../conexion/abrir_conexion.php');
 
-if (isset($_POST['submit'])) {
-    $cedula = $_POST['cedula'];
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $direccion = $_POST['direccion'];
-    $tipo = $_POST['tipo'];
-    $pass = $_POST['pass'];
-    $passc = $_POST['passc'];
-    $celular = $_POST['celular'];
-    $fecha = $_POST['fecha'];
-    
-    echo "<script>console.log(".$pass.");</script>";
-    if ($pass != $passc) {
-        header('location: ../Vistas/altaUser.php?malPass=Verifique la contraseña');
-    } 
+if (isset($_POST['accion'])) {
+    $accion = $_POST['accion'];
 
-    $hoy = new DateTime();
-    $annos = $hoy->diff($fecha);
-    if ($annos->y>18) {
-        header('location: ../Vistas/altaUser.php?edad=verifique su edad');
-    } 
-    $passencry = sha1($pass);
-        //verifico si existe ese usuario
+    if($accion=='altaUsuario'){
+        $cedula = $_POST['cedula'];
+        $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
+        $direccion = $_POST['direccion'];
+        $tipo = $_POST['tipo'];
+        $pass = $_POST['pass'];
+        $celular = $_POST['celular'];
+        $fecha = $_POST['nacimiento'];
+        $libreta=$_POST['libreta'];
+    $passencry = sha1($pass);//verifico si existe ese usuario
     $existe = usuario::existe($cedula);
-    $conexion = DB::conexion();
-    if ($existe==true) {
-        header('location: ../Vistas/altaUser.php?noexito=Este usuario ya existe');
-    } else {
-        $sql = "INSERT INTO usuarios (ci, nombre, apellido,cargo,celular,direccion,password)
-        VALUES ('$cedula', '$nombre', '$apellido','$tipo','$celular','$direccion','$passencry')";
-        $resultado = mysqli_query($conexion, $sql);
-        if ($resultado == TRUE) {
-            header('location: ../Vistas/altaUser.php?exito=Usuario ingresado al sistema con exito');
-        } else {
-            header('location: ../Vistas/altaUser.php?fallo=fallo la consulta');
+    if($existe==true){
+        echo "ya existe";
+        return;
+    }else{
+        $ingresar=usuario::registrar($cedula,$nombre,$apellido,$direccion,$tipo,$passencry,$celular,$fecha,$libreta);
+        if($ingresar==true){
+            echo 'exito';
+        }else{
+            echo "error";
         }
     }
-
-    include '../conexion/cerrar_conexion.php';
+} else if($accion=='eliminarUsuario'){
+    $cedula = $_POST['ci'];
+    $salida = usuario::eliminarUsuario($cedula);
+    if($salida == true){
+        echo 'borrado';
+    }else{
+        echo "error";
+    }
 }
+}
+
 ?>

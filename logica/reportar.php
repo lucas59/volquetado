@@ -11,7 +11,8 @@ if (isset($_POST["accion"])) {
 		$estadoContenido=$_POST["estadoContenido"];
 		$residuosFuera=$_POST["residuo"];
 		$nota=$_POST["nota"];
-		$inspeccionado = 1;
+		$inspeccionado=$_POST["inspeccionado"];
+		//echo $inspeccionado;
 		$fecha = new DateTime();
 		$resultado=reporte::agregarReporte($circuito,$numero,$fecha->format('Y-m-d H:i:s'), $estadoFisico, $estadoContenido, $nota, $residuosFuera, $inspeccionado);
 		if($resultado==true){

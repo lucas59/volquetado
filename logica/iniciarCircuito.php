@@ -8,12 +8,14 @@ if(isset($_SESSION['user'])){
 		$chofer=$_SESSION['user'];
 		$circuito = $_POST["circuito"];
 		$matricula= $_POST["camion"];
-		$recolectores = $_POST["recolectores"];
+		$recolector1 = $_POST["recolector1"];
+		$recolector2 = $_POST["recolector2"];
+		
 		$inicio= new DateTime();
 		$camion = camion::buscarCamion($matricula);
-		$recorrido=new recorrido($circuito, $camion->getPadron(), $camion->getMatricula(), $chofer->getCi(), $recolectores[0], $recolectores[1], $inicio,$inicio);
+		$recorrido=new recorrido($circuito, $camion->getPadron(), $camion->getMatricula(), $chofer->getCi(), $recolector1, $recolector2, $inicio,$inicio);
 		$_SESSION['recorrido'] = $recorrido;
-		$resultado=recorrido::agregarRecorrido($circuito, $camion->getPadron(), $camion->getMatricula(), $chofer->getCi(), $recolectores[0],$recolectores[1],$inicio,$inicio);
+		$resultado=recorrido::agregarRecorrido($circuito, $camion->getPadron(), $camion->getMatricula(), $chofer->getCi(), $recolector1,$recolector2,$inicio,$inicio);
 		if($recorrido){
 			echo "inicio";
 		}else{

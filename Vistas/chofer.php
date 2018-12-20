@@ -48,17 +48,22 @@
 						<?php } ?>
 					</div>
 				</div>
-				<div style="display:inline-block;" id="recolectores">
+				<div style="display:inline-block;text-align: center;" id="recolectores">
 					<h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Recolectores</h4>
-					<form name="recolectores">
-						<?php
-						$recolectores = usuario::listarRecolectores();
-						for ($i = 0; $i < count($recolectores); $i++) {									
-							echo "<input value=\"".$recolectores[$i]->getCi()."\" name=\"recolector\" type=\"checkbox\" checked=\"checked\">";
-							echo "<label>".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</label>";
-							echo("<br>");
-						}?>
-					</form>
+						<select id="recolector1">
+							<?php
+							$recolectores = usuario::listarRecolectores();
+							for ($i = 0; $i < count($recolectores); $i++) {									
+								echo "<option value=".$recolectores[$i]->getCi().">".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</option>";
+							}?>
+						</select><br>
+						<select id="recolector2">
+							<?php
+							$recolectores = usuario::listarRecolectores();
+							for ($i = 0; $i < count($recolectores); $i++) {									
+								echo "<option value=".$recolectores[$i]->getCi().">".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</option>";
+							}?>
+						</select>
 				</div>
 
 				<div style="float: right;" id="camiones">

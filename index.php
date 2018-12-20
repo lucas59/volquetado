@@ -6,27 +6,49 @@
     <script type="text/javascript" src = "bootstrap/js/bootstrap.min.js" > </script> 
     <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
     <link type="text/css" href="css/indexCSS.css" rel="stylesheet"/>
-
     <title>Iniciar Sesion</title>
-    <?php
-    if (isset($_GET['malPass'])) {
-        ?>
-        <script>
-            $('#modal').modal();
-        </script>
-        <?php
-    } elseif (isset($_GET['noExiste'])) {
-        ?>
+    <style type="text/css">
+    #container {
+        width:100%;
+        text-align:center;
     }
+
+    #left {
+        float:left;
+        width:100px;
+    }
+
+    #center {
+        display: inline-block;
+        margin:0 auto;
+        width:100px;
+    }
+
+    #right {
+        float:right;
+        width:100px;
+    }
+</style>
+<?php
+if (isset($_GET['malPass'])) {
+    ?>
     <script>
         $('#modal').modal();
     </script>
     <?php
+} elseif (isset($_GET['noExiste'])) {
+    ?>
+}
+<script>
+    $('#modal').modal();
+</script>
+<?php
 }
 ?>
 </head>
 <body style="background-color: #e4e5e6">
     <?php
+    //include 'Vistas/barra_menu.php';
     require 'logica/usuario.php';
     session_start();
     if (isset($_SESSION['user'])) {
@@ -72,6 +94,9 @@
                 </div>
             </div>
         </div>
+        <div id="container">
+            <div style="width: 40%;height: 20%"id="center"><img style="width: 100%;height: 100%" src="/Volquetado/Imagenes/idp.png"/></div>
+        </div>
         <!-- Modal content-->
         <div  class="modal fade" id="modal" role="dialog">
             <div class="modal-dialog">
@@ -92,6 +117,5 @@
     </div>
 </div>
 <?php } ?>
-
 </body>
 </html>

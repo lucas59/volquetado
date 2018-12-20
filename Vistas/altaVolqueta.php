@@ -3,14 +3,15 @@
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" type="text/css"/>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/registrar.css">
-    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.31.min.js"></script>
     <title>Administrador de volquetas</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <script type="text/javascript" src="../js/miDireccion.js"></script>
     <?php
 
     require ('../conexion/abrir_conexion.php');
-    require ('../logica/volquetas.php');
+    include '../logica/volquetas.php';
     include '../logica/circuito.php';
     ?>
 
@@ -36,16 +37,29 @@
     </head>
     <body style="background-color: #e4e5e6">
         <?php include '../Vistas/barra_menu.php'; ?>
-        <br>
         <div style="position: absolute;" id="map"></div>
-        <img onclick="myLocation()" id="myLocation" src="../Imagenes/mylocation.png" style="max-width:100%;width:10%;height:10%;position: relative;"/>
-        <script type="text/javascript" src="../js/miDireccion.js"></script>
+        <div style="position: absolute;" class="select">
+            <?php
+            $circuito = circuito::listarCircuitos();
+            if ($row = mysqli_fetch_array($circuito)) {
+                ?>
+                <select id="listarVolquetaPorCircuito">
+                    <option onclick="mostrarVolquetas('Todos')">Todos</option>
+                    <?php
+                    do {
+                        $circuitoId=$row['circuito'];
+                        echo "<option onclick=mostrarVolquetas('".$circuitoId."') >" . $row['circuito'] . "</option>";
+                    } while ($row = mysqli_fetch_array($circuito));
+                    ?>
+                </select>
+            <?php } ?>
+        </div>
+        <img onclick="myLocation()" id="myLocation" src="../Imagenes/mylocation.png" style="max-width:100%;width:7%;height:10%;position: relative;float: right;"/>
         <?php
-        $volquetas = (new volquetas())->getVolquetas();
+        $volquetas = volquetas::getVolquetas();
 
         for ($i = 0; $i < count($volquetas); $i++) {
             ?>
-
             <script type="text/javascript">
                 agregarVolqueta('<?php echo $volquetas[$i]->getNro() ?>','<?php echo $volquetas[$i]->getLat() ?>','<?php echo $volquetas[$i]->getLong() ?>','<?php echo $volquetas[$i]->getFechaIngreso() ?>','<?php echo $volquetas[$i]->getEstadoFisico() ?>','<?php echo $volquetas[$i]->getEstadoContenido() ?>','<?php echo $volquetas[$i]->getCircuito() ?>');
             </script>
@@ -117,6 +131,8 @@
                 </div>
             </div>
         </div>
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
         <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
     </script>

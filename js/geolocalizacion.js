@@ -7,6 +7,7 @@ var ultimoInfoWindows = null;
 var watchId;
 let ultimaLatitud ;
 let ultimaLongitud;
+var reportesRealizados=[];
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -90,10 +91,10 @@ $("document").ready(function(){
 var map; 
 function initGeolocation() {
     if(watchId){
-     navigator.geolocation.clearWatch(watchID);
-     watchID = null;
- }
- if (navigator && navigator.geolocation) {
+       navigator.geolocation.clearWatch(watchID);
+       watchID = null;
+   }
+   if (navigator && navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(successCallback, 
       errorCallback,
       {enableHighAccuracy:true,timeout:Infinity,maximumAge:0});
@@ -107,16 +108,10 @@ function errorCallback() {}
 
 function successCallback(position) {
 
- var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- if(ultimaLatitud&&ultimaLongitud){
-    if(ultimaLongitud==position.coords.longitude&&ultimaLatitud==position.coords.latitude){
-        console.log('iguales');
-        return;
-    }
-}
-console.log(position.coords.latitude);
-console.log(position.coords.longitude);
-var mapOtn={
+    var myLatlng = new google.maps.LatLng(position.coords.latitude.toFixed(8), position.coords.longitude.toFixed(8));
+   console.log(position.coords.latitude);
+   console.log(position.coords.longitude.toFixed(8));
+   var mapOtn={
     zoom:10,
     center:myLatlng,
     mapTypeId:google.maps.MapTypeId.ROAD
@@ -156,6 +151,9 @@ function clickVolqueta(volqueta){
     console.log(volqueta.circuito);
     console.log(volqueta.numero);
     $('#modalReporte').modal();
+    document.getElementById('circuito').value=volqueta.circuito;
+    document.getElementById('numero').value=volqueta.numero;
+
 }
 
 $("#buscame").click(function(){
@@ -168,3 +166,58 @@ $("#buscame").click(function(){
         });
     }   
 });
+
+
+function nuevoReporte(){
+    console.log("llegoo");
+    var circuito = document.getElementById('circuito').value;
+    var numero = document.getElementById('numero').value;
+    var estadoFisico=document.getElementById('estadoF').value;
+    var estadoContenido=document.getElementById('estadoC').value;
+    var residuosFuera=document.getElementById('residuos').checked;
+    if(reportar(circuito,numero,estadoFisico,estadoContenido,residuosFuera)){
+
+    }else{
+
+
+        $.ajax({
+            url: '/volquetado/logica/reportar.php',
+            type: 'POST',
+            data: {
+                accion:"reportar",
+                numero:numero,
+                circuito:circuito,
+                estadoContenido:estadoContenido,
+                estadoFisico:estadoFisico,
+                nota:"",
+                inspeccionado:"0",
+                residuo:residuosFuera
+            },
+            success: function(response){
+                console.log(response);
+                if(response.localeCompare("1")){ 
+                    console.log("exito");
+                }else{
+                    console.log("noexito");
+                }
+            }
+        }); 
+
+    }
+}
+
+function reportar(circuito,numero,estadoF,estadoC,residuos){
+    if(verificarReporte(numero)){
+        console.log("reporte ya realizado");
+    }else{
+
+    }
+}
+
+function verificarReporte(numero){
+    if(reportesRealizados.includes(numero)){
+        return true;
+    }else{
+        return false;
+    }    
+}

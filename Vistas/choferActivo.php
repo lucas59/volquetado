@@ -1,9 +1,10 @@
 <html>
 <head>
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" type="text/css"/>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/iniciarRecorrido.css">
-    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+
     <title>Administrador de volquetas</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -44,7 +45,7 @@
         </div>
         <script type="text/javascript" src="../js/geolocalizacion.js"></script>
         <?php
-        $volquetas = (new volquetas())->getVolquetas();
+        $volquetas = volquetas::getVolquetas();
 
         for ($i = 0; $i < count($volquetas); $i++) {
             ?>
@@ -76,7 +77,7 @@
                 });
             });
         </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeo3i7Hw8nQFN7TIXeItF4G8McyyGImn8&callback=initMap">
         </script>
         <!---///////////////////////////////////////////////////////////////////-->
         <!-- Modal -->
@@ -84,11 +85,41 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Volqueta ingresada.</h4>
+                        <h4 class="modal-title">Nuevo reporte</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
+                    <div class="modal-body">
+                        <input style="display: none" type="text" id="circuito">
+                        <input style="display: none" type="text" id="numero">
+                        <div style="display: inline-block;">
+                            <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label title">Estado físico</h4>
+                            <div class="select">
+                              <select id="estadoF">
+                                <option>Normal</option>
+                                <option>Chocada</option>
+                                <option>Quemada</option>
+                                <option>Prensada</option>
+                                <option>Tapa rota</option>
+                                <option>Ruedas dañadas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: inline-block;">
+                        <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Estado del contenido</h4>
+                        <div class="select">
+                          <select id="estadoC">
+                            <option>Vacío</option>
+                            <option>Medio</option>
+                            <option>Lleno</option>
+                            <option>Desbordado</option>
+                        </select>
+                    </div>
                 </div>
+                <label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label>
+                <?php echo "<button onclick=\"nuevoReporte()\" id=\"reportarbtn\" type=\"button\" style=\"background-color: #287AE6; color : white\"  class=\"btn btn-block\">Reportar</button>";?>
             </div>
         </div>
-    </body>
-    </html>
+    </div>
+</div>
+</body>
+</html>

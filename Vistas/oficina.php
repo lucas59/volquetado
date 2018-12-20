@@ -10,21 +10,27 @@
 		justify-content: center;
 	}
 </style>
+
+
 </head>
 <body style="background-color:#e4e5e6">
 	<?php include '../Vistas/barra_menu.php'; ?>
 
+	<?php 
+	if($_SESSION['user']==false){
+		header('location: ../index.php');
+	}?>
 	<div id="login-overlay" class="modal-dialog">
 		<div class="modal-content" style="margin-top: 18%;">
 
 			<div class="modal-header centrar">
-				<h2 style="padding-left: 25%" class="modal-title" id="myModalLabel">Bienvenido</h2>
+				<h2 style="margin-left: auto;margin-right: auto;" class="modal-title" id="myModalLabel">Bienvenido</h2>
 			</div>
 			<div class="modal-body centrar">
-				<div class="btn btn-primary btn-block" ><a style="color: #ffff" href="../Vistas/altaUser.php">Agregar un usuario</a></div>
-				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/altaCamion.php">Agregar un camión</a></div>
-				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/altaVolqueta.php">Agregar volqueta</a></div>
-				<div data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-block"><a style="color: #ffff">Agregar circuito</a></div>
+				<div class="btn btn-primary btn-block" ><a style="color: #ffff" href="../Vistas/administradorUsuarios.php">Administrar usuarios</a></div>
+				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/administradorCamiones.php">Administrar camiónes</a></div>
+				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/altaVolqueta.php">Administrar volquetas</a></div>
+				<div data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-block"><a style="color: #ffff">Administrar circuitos</a></div>
 			</div>
 			<div style="align-content: center" class="modal-footer">
 				<div style="display: none;text-align: center;margin-right: 25%;" id="contenedorMensajeExito" class="alert alert-success">

@@ -6,6 +6,7 @@ function reportar(circuito,numero){
 }
 function aceptarDatos(circuito,numero,estadoFisico,estadoContenido,contenidoFuera){
 	console.log(numero);
+	console.log('llego');
 	document.getElementById("circuitoCorrecto").value=circuito;
 	document.getElementById("numeroCorrecto").value=numero;
 	document.getElementById("estadoFisico").value=estadoFisico;
@@ -69,7 +70,8 @@ function btnReportar(){
 			estadoContenido:estadoContenido,
 			estadoFisico:estadoFisico,
 			nota:nota,
-			residuo:residuosFuera
+			residuo:residuosFuera,
+			inspeccionado:'1'
 		},
 		success: function(response){
 			console.log(response);

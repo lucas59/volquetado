@@ -11,7 +11,6 @@
  *
  * @author Lucas
  */
-//include '../conexion/abrir_conexion.php';
 if(class_exists("usuario"))
     return;
 
@@ -118,8 +117,9 @@ class usuario {
 
     public static function existe($cedula) {
         $a = false;
-        $consulta = DB::conexion()->prepare("select * from usuarios where ci='.$cedula'");
+        $consulta = DB::conexion()->prepare("select * from usuarios where ci='".$cedula."'");
         $consulta->execute();
+        //$consulta = DB::conexion()->prepare("select * from historiavolquetas as hvv where fecha IN (select MAX(fecha) from historiavolquetas as hv where hv.circuito=hvv.circuito and hv.nro=hvv.nro)  and circuito = ? GROUP BY nro ORDER BY fecha DESC");
         $resultado = $consulta->get_result();
         if ($resultado->num_rows == 1) {
             return true;
@@ -149,4 +149,28 @@ class usuario {
         }
         return $recolectores;
     }
-}
+    public function registrar($cedula,$nombre,$apellido,$direccion,$tipo,$passencry,$celular,$fecha,$libreta){
+        $consulta = DB::conexion()->prepare("INSERT INTO `usuarios` (`ci`, `nombre`, `apellido`, `nacimiento`, `libreta`, `cargo`, `celular`, `direccion`, `password`) VALUES (?,?,?,?,?,?,?,?,?)");
+        //INSERT INTO `usuarios` (`ci`, `nombre`, `apellido`, `nacimiento`, `libreta`, `cargo`, `celular`, `direccion`, `password`) VALUES ('123', 'lucas', 'cieri', '1998-12-04 00:00:00', '2018-12-29 00:00:00', 'Recolector', '4567890', 'iubisauyhdbas', 'asd');
+        $consulta->bind_param("sssssssss",$cedula,$nombre,$apellido,$fecha,$libreta,$tipo,$celular,$direccion,$passencry);
+        if($consulta->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function listarUsuarios() {
+        $conexion = DB::conexion();
+        return $resultado = mysqli_query($conexion, "SELECT * from usuarios");
+    }
+
+    public function eliminarUsuario($cedula){
+        $consulta = DB::conexion()->prepare('UPDATE usuarios SET activo = 0 WHERE ci=?');
+        $consulta->bind_param("s",$cedula);
+        if($consulta->execute()){
+            return true;
+        }else{
+            return false;}
+
+        }
+    }

@@ -6,7 +6,7 @@
     <link type="text/css" href="../css/indexCSS.css" rel="stylesheet">
     <title>Agregar camion</title>
     <?php
-      
+
     if (isset($_GET['yaesta'])) {
         echo '<script language="javascript">alert("Este camion ya se encuentra registrado.");</script>';
     } elseif (isset($_GET['exito'])) {
@@ -36,9 +36,9 @@
 </head>
 <body style="background-color: #e4e5e6">
     <?php include '../Vistas/barra_menu.php'; ?>
+    <a href="../Vistas/administradorCamiones.php"><img src="../Imagenes/atras.png" style="width: 50px;height: 50px" /></a>
     <div id="login-overlay" class="modal-dialog">
         <div class="modal-content" style=" margin-top: 18%;">
-
             <div class="modal-header centrar">
                 <h2 class="modal-title" id="myModalLabel">Agregar camión</h2>
             </div>
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="matricula" class="control-label">Matrícula</label>
-                                    <input type="text" name="matricula" pattern="[A-Za-z]{3}[0-9]{3}" class="form-control" required/>
+                                    <input type="text" name="matricula" pattern="[A-Za-z]{3}[0-9]{4}" class="form-control" required/>
                                     <span class="help-block"></span>
                                 </div>
                                 <div class="form-group">
