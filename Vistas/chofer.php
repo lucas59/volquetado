@@ -7,7 +7,6 @@
 	<link rel="stylesheet" type="text/css" href="../css/registrar.css">
 	<script type="text/javascript" src="../js/jquery.js"></script>
 	<title>Chofer</title>
-	<style type="text/css">
 	<?php 
 	require ('../conexion/abrir_conexion.php');
 	require ('../logica/volquetas.php');
@@ -15,10 +14,26 @@
 	include '../logica/camion.php';
 	include '../logica/usuario.php';
 	?>
-	#centrar{
-		align-items: center;
-		display: flex;
-		justify-content: center;
+	<style type="text/css">
+	#container {
+		width:100%;
+		text-align:center;
+	}
+
+	#left {
+		float:left;
+		width:100px;
+	}
+
+	#center {
+		display: inline-block;
+		margin:0 auto;
+		width:100px;
+	}
+
+	#right {
+		float:right;
+		width:100px;
 	}
 </style>
 </head>
@@ -48,22 +63,22 @@
 						<?php } ?>
 					</div>
 				</div>
-				<div style="display:inline-block;text-align: center;" id="recolectores">
+				<div  style="display:inline-block;margin-right: auto;margin-left: auto" id="recolectores">
 					<h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Recolectores</h4>
-						<select id="recolector1">
-							<?php
-							$recolectores = usuario::listarRecolectores();
-							for ($i = 0; $i < count($recolectores); $i++) {									
-								echo "<option value=".$recolectores[$i]->getCi().">".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</option>";
-							}?>
-						</select><br>
-						<select id="recolector2">
-							<?php
-							$recolectores = usuario::listarRecolectores();
-							for ($i = 0; $i < count($recolectores); $i++) {									
-								echo "<option value=".$recolectores[$i]->getCi().">".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</option>";
-							}?>
-						</select>
+					<select id="recolector1">
+						<?php
+						$recolectores = usuario::listarRecolectores();
+						for ($i = 0; $i < count($recolectores); $i++) {									
+							echo "<option value=".$recolectores[$i]->getCi().">".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</option>";
+						}?>
+					</select><br>
+					<select id="recolector2">
+						<?php
+						$recolectores = usuario::listarRecolectores();
+						for ($i = 0; $i < count($recolectores); $i++) {									
+							echo "<option value=".$recolectores[$i]->getCi().">".$recolectores[$i]->getNombre()." ".$recolectores[$i]->getApellido()."</option>";
+						}?>
+					</select>
 				</div>
 
 				<div style="float: right;" id="camiones">

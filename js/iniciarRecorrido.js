@@ -19,7 +19,7 @@ $("#iniciar").click(function(){
 		success: function(response){
 			console.log(response);
 			if(response==="inicio"){
-				location.href ="../vistas/choferActivo.php";
+				location.href ="../vistas/choferActivo.php?circuito="+circuito+"";
 			}else{
 				console.log("errorrr");
 			}

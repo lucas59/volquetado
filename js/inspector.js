@@ -1,4 +1,3 @@
-
 function reportar(circuito,numero){
 	document.getElementById("circuito").value=circuito;
 	document.getElementById("numero").value=numero;
@@ -18,33 +17,59 @@ function aceptarDatos(circuito,numero,estadoFisico,estadoContenido,contenidoFuer
 function nuevoReporte(circuito){
 	$("#modalAgregar").modal();
 }
+
+function previewFile() {
+	var preview = document.getElementById('vistaPrevia');
+	var file    = document.querySelector('input[type=file]').files[0];
+	var reader  = new FileReader();
+	//console.log(file);
+
+	reader.onloadend = function () {
+		preview.src = reader.result;
+	}
+
+	if (file) {
+		reader.readAsDataURL(file);
+	} else {
+		preview.src = "";
+	}
+}
+
 function nuevoReport(circuito){
 	var estadoFisico = document.getElementById("estadoF").value;
 	var estadoContenido = document.getElementById("estadoC").value;
 	var nota = document.getElementById("notita").value;
 	var volqueta= document.getElementById("volqueta").value;	
 	var residuos= document.getElementById("residuos").checked;
+
+	var inputFileImage = document.getElementById("imagenNuevoReporte");
+	var file = inputFileImage.files[0];
+	var data = new FormData();
+	data.append('archivo',file);
+	data.append('estadoContenido',estadoContenido);
+	data.append('estadoFisico',estadoFisico);
+	data.append('nota',nota);
+	data.append('volqueta',volqueta);
+	data.append('accion','nuevoReporte');
+	data.append('circuito',circuito);
+	data.append('residuos',residuos);
+	data.append('inspeccionado',"1");
+	
 	$.ajax({
 		url: '/volquetado/logica/reportar.php',
 		type: 'POST',
-		data: {
-			accion:"nuevoReporte",
-			volqueta:volqueta,
-			circuito:circuito,
-			estadoContenido:estadoContenido,
-			estadoFisico:estadoFisico,
-			nota:nota,
-			residuos:residuos
-		},
-		success: function(response){
-			console.log(response);
-			if(response.localeCompare("1")){ 
-				location.reload();
-			}
-		}
-		
-	});
-
+		data:data,
+		contentType: false, //importante enviar este parametro en false
+        processData: false, //importante enviar este parametro en false
+        success: function(response){
+        	console.log(response);
+        	if(response==1){ 
+        		location.reload();
+        	}else{
+        		location.reload();
+        	}
+        }
+    });
 };
 
 $("#close").click(function(){
@@ -52,34 +77,41 @@ $("#close").click(function(){
 });
 
 function btnReportar(){
-	console.log("asdas");
 	var estadoFisico = document.getElementById("estadoF").value;
 	var estadoContenido = document.getElementById("estadoC").value;
 	var nota = document.getElementById("descripcion").value;	
 	var circuito = document.getElementById("circuito").value;	
 	var numero= document.getElementById("numero").value;	
 	var residuosFuera= document.getElementById("residuos").checked;
-
+	//******************************************
+	var inputFileImage = document.getElementById("imagen");
+	var file = inputFileImage.files[0];
+	var data = new FormData();
+	data.append('archivo',file);
+	data.append('estadoFisico',estadoFisico);
+	data.append('estadoContenido',estadoContenido);
+	data.append('nota',nota);
+	data.append('circuito',circuito);
+	data.append('numero',numero);
+	data.append('residuosFuera',residuosFuera);
+	data.append('accion',"reportar");
+	data.append('inspeccionado',"1");
+	data.append('residuo',residuosFuera);
 	$.ajax({
 		url: '/volquetado/logica/reportar.php',
 		type: 'POST',
-		data: {
-			accion:"reportar",
-			numero:numero,
-			circuito:circuito,
-			estadoContenido:estadoContenido,
-			estadoFisico:estadoFisico,
-			nota:nota,
-			residuo:residuosFuera,
-			inspeccionado:'1'
-		},
-		success: function(response){
-			console.log(response);
-			if(response.localeCompare("1")){ 
-				location.reload();
-			}
-		}
-	});	
+		data:data,
+		contentType: false, //importante enviar este parametro en false
+        processData: false, //importante enviar este parametro en false
+        success: function(response){
+        	console.log(response);
+        	if(response==1){ 
+        		location.reload();
+        	}else{
+        		location.reload();
+        	}
+        }
+    });	
 };
 
 function confirmarReporte(){

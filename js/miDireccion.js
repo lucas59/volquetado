@@ -23,14 +23,13 @@ function mostrarVolquetas(circuito){
             circuito:circuito
         },
         success: function(response){
-            console.log(response);   
-            var len = response.length;
-            for(var i=0; i<len; i++){
-                var numero = response[i].nro;
-                var circuito = response[i].circuito;
-                console.log(numero);
+            var data = JSON.parse(response);
+            marcadores=[];
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i].nro);
+                agregarVolqueta(data[i].nro,data[i].lat,data[i].long,data[i].fechaIngreso,data[i].estadoFisico,data[i].estadoContenido, data[i].circuito);   
             }
-
+            initMap();
         }});
 }
 
@@ -166,6 +165,7 @@ function mostrarVolquetas(circuito){
                     scaledSize:new google.maps.Size(29,35)
                 }
             });
+            faisalabad=evento.latLng;
             $('#myModal').modal();
         });
 
@@ -195,7 +195,7 @@ function mostrarVolquetas(circuito){
 }
 
 function myLocation(){
-   if ("geolocation" in navigator){
+ if ("geolocation" in navigator){
     navigator.geolocation.getCurrentPosition(function(position){ 
         var pos = {lat: position.coords.latitude, lng: position.coords.longitude};
         map.panTo(pos);

@@ -113,7 +113,7 @@ class camion {
             return false;
         }
     }
-    public function listarCamiones() {
+    public static function listarCamiones() {
         $conexion = DB::conexion();
         return $resultado = mysqli_query($conexion, "SELECT * from camion");
     }
@@ -130,9 +130,9 @@ class camion {
         return $camion;
     }
     public function borrarCamion($padron,$matricula){
-       $consulta=DB::conexion()->prepare("UPDATE camion SET vivo = '0' WHERE padron = ? AND matricula = ?");
-       $consulta->bind_param('ss',$padron,$matricula);
-       if($consulta->execute()){
+     $consulta=DB::conexion()->prepare("UPDATE camion SET vivo = '0' WHERE padron = ? AND matricula = ?");
+     $consulta->bind_param('ss',$padron,$matricula);
+     if($consulta->execute()){
         return true;
     }else{
         return false;

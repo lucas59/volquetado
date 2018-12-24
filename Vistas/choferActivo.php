@@ -8,6 +8,7 @@
     <title>Administrador de volquetas</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+
     <?php
 
     require ('../conexion/abrir_conexion.php');
@@ -21,6 +22,36 @@
             #map {
                 height: 90%;
                 width: 100%;
+            }
+            #container {
+                width:100%;
+                text-align:center;
+            }
+
+            #left {
+                float:left;
+                width:100px;
+            }
+
+            #nuevoR {
+                display: inline-block;
+                margin:0 auto;
+                width:100px;
+                border-radius: 40px 40px 40px 40px;
+                -moz-border-radius: 40px 40px 40px 40px;
+                -webkit-border-radius: 40px 40px 40px 40px;
+                border: 0px solid #000000;
+            }
+            #finalizar{
+                border-radius: 40px 40px 40px 40px;
+                -moz-border-radius: 40px 40px 40px 40px;
+                -webkit-border-radius: 40px 40px 40px 40px;
+                border: 0px solid #000000;
+            }
+
+            #right {
+                float:right;
+                width:100px;
             }
             /* Optional: Makes the sample page fill the window. */
             html, body {
@@ -36,12 +67,12 @@
         ?>
     </head>
     <body style="background-color: #e4e5e6">
+
         <div id="map"></div>
-        <div>
+        <div id="container">
             <button style="float: right;" id="finalizar" type="button" class="btn btn-danger">Finalizar el recorrido</button>
-        </div>
-        <div>
-            <button id="buscame" type="button" class="btn btn-success">Buscame</button>
+            <img onclick="myLocation()" id="myLocation" src="../Imagenes/mylocation.png" style="max-width:100%;width:5%;height:8%;float: left;"/>
+            <button id="nuevoR" onclick="abrirModal(<?php $circuito ?>)" style="width: auto;" type="button" class="btn btn-success">Nuevo reporte</button>
         </div>
         <script type="text/javascript" src="../js/geolocalizacion.js"></script>
         <?php
@@ -120,6 +151,72 @@
             </div>
         </div>
     </div>
+</div>
+<!--Modal para hcer un nuevo reporte de alguna volqueta del mapa-->
+
+<div id="modalNuevoReporte" class="modal fade container-fluid" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Nuevo reporte</h4>
+        <button id="close" type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <div style="display: none" id="mensajeNuevoReporte" class="alert alert-success">
+          <label id="notaNuevoReporte" class="alert-link">...</label>
+      </div>
+      <!-- mustro las volquetas de este circuito -->
+      <!--//////////////////////////////////////////////////////////////////////////-->
+      <div style="display: inline-block;">
+          <label style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Volqueta</label>
+          <div class="select">
+            <select id="volqueta">
+              <?php
+              $circuito=$_GET['circuito'];
+              $volquetas = volquetas::listarVolquetasDeCircuito($circuito);
+
+              for ($i = 0; $i < count($volquetas); $i++) {
+                ?>
+                <option><?php echo $volquetas[$i]->getNro() ?></option>
+
+            <?php } ?>
+        </select>
+    </div>
+    <div style="display: inline-block;">
+        <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label title">Estado físico</h4>
+        <div class="select">
+          <select id="estadoFisico">
+            <option>Normal</option>
+            <option>Chocada</option>
+            <option>Quemada</option>
+            <option>Prensada</option>
+            <option>Tapa rota</option>
+            <option>Ruedas dañadas</option>
+        </select>
+    </div>
+</div>
+<div style="display: inline-block;">
+    <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Estado del contenido</h4>
+    <div class="select">
+      <select id="estadoContenido">
+        <option>Vacío</option>
+        <option>Medio</option>
+        <option>Lleno</option>
+        <option>Desbordado</option>
+        <option></option>
+    </select>
+</div>
+</div>
+</div>
+<label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label>
+<?php echo "<button onclick=nuevoReport('".$circuito."') id=\"nuevoReporte\" type=\"button\" style=\"background-color: #287AE6; color : white\"  class=\"btn btn-block\">Reportar</button>";
+?>
+<div style="display: none;" id="mensajeExito" class="alert alert-success">
+  <a id="mensaje" class="alert-link"></a>
+</div>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>

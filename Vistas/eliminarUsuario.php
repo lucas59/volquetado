@@ -2,7 +2,8 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
-	<script type="text/javascript" src="../js/jquery-3.31.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-3.31.min.js"></script>	
+	<script type="text/javascript" src="../js/listarTabla.js"></script>
 	<title>Oficina</title>
 	<style type="text/css">
 	#centrar{
@@ -37,6 +38,9 @@
 <body style="background-color:#e4e5e6">
 	<?php include '../Vistas/barra_menu.php'; 	
 	require ('../conexion/abrir_conexion.php');?>
+	<div style="position: absolute;width: 20%; margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center">
+		<input id="buscar" style=" display: block;margin-right: auto;margin-left: auto;width: 216px" type="text" name="Buscar" class="form-control" placeholder="Buscar" onkeyup="FiltrarTabla()" />
+	</div>
 	<?php 
 	if($_SESSION['user']==false){
 		header('location: ../index.php');
@@ -66,19 +70,27 @@
 					echo "<td><p>" . $row["ci"] . "</p></td>";
 					echo "<td><p>" . $row["nombre"] ." ". $row["apellido"] . "</p></td>";
 					echo "<td><p>" . $row['cargo'] . "</p></td>";
-					echo"<td><p>" . $row['libreta'] . "</p></td>";
-					echo"<td><p>" . $row['celular'] . "</p></td>";
-					echo"<td><p>" . $row['direccion'] . "</p></td>";
-					if($row['activo']==1){
-						$ci =$row['ci'];
-						echo "<td><button onclick=eliminarCamion('".$ci."') id=\"btnEliminar\" style=\"background:url('../Imagenes/borrar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
-					}
-					echo "</tr>";
-				} while ($row = mysqli_fetch_array($usuarios));
+					$hoy = date("Y-m-d");
+					if($row['cargo']!='Chofer'){
+							echo "<td><p>No ingresada</p></td>";
+					}else{
+						if($hoy<=$row['libreta']){
+							echo "<td><p>" . $row['libreta'] . "</p></td>";
+						}else{
+							echo "<td><p style=\"color: red\">" . $row['libreta'] . "</p></td>";
+						}}
+						echo "<td><p>" . $row['celular'] . "</p></td>";
+						echo "<td><p>" . $row['direccion'] . "</p></td>";
+						if($row['activo']==1){
+							$ci =$row['ci'];
+							echo "<td><button onclick=eliminarCamion('".$ci."') id=\"btnEliminar\" style=\"background:url('../Imagenes/borrar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+						}
+						echo "</tr>";
+					} while ($row = mysqli_fetch_array($usuarios));
+					?>
+				<?php }
 				?>
-			<?php }
-			?>
-		</tbody>
-	</table>
-</body>
-</html>
+			</tbody>
+		</table>
+	</body>
+	</html>

@@ -21,11 +21,11 @@ header('location: ../index.php');
 	<div id="login-overlay" class="modal-dialog">
 		<div class="modal-content" style="margin-top: 18%;">
 			<div class="modal-header centrar">
-				<h3 style="padding-left: 25%" class="modal-title" id="myModalLabel">Administrador de camiónes</h3>
+				<h3 style="margin-left: auto;margin-right: auto;" class="modal-title" id="myModalLabel">Administrador de camiónes</h3>
 			</div>
 			<div class="modal-body centrar">
 				<div class="btn btn-primary btn-block" ><a style="color: #ffff" href="../Vistas/altaCamion.php">Agregar un camión</a></div>
-				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/eliminarCamion.php">Eliminar un camión</a></div>
+				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/eliminarCamion.php">Visualizar camiones</a></div>
 			</div>
 		</div>
 		<!--***********************************************************************************-->

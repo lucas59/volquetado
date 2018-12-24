@@ -103,48 +103,53 @@ and open the template in the editor.
 
   <!-- #########################MODAL PARA DAR UN REPORTAR########################## -->
   <div id="modalReportar" class="modal fade container-fluid" role="dialog">
-    <div class="modal-dialog">
+    <div style="height: auto;" class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Reportar</h4>
+          <h4 style="margin-left: auto;margin-right: auto;" class="modal-title">Reportar</h4>
           <button id="close" type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <input id="circuito" type="text" style="display: none;" name="circuito"/>
-          <input id="numero" type="text" style="display: none;" name="numero"/>
-          <div style="display: inline-block;">
-            <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label title">Estado físico</h4>
-            <div class="select">
-              <select id="estadoF">
-                <option>Normal</option>
-                <option>Chocada</option>
-                <option>Quemada</option>
-                <option>Prensada</option>
-                <option>Tapa rota</option>
-                <option>Ruedas dañadas</option>
-              </select>
+          <form id="miForm" enctype="multipart/form-data">
+            <input id="circuito" type="text" style="display: none;" name="circuito"/>
+            <input id="numero" type="text" style="display: none;" name="numero"/>
+            <div style="margin-left: auto;margin-right: auto" style="display: inline-block;">
+              <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label title">Estado físico</h4>
+              <div class="select">
+                <select id="estadoF">
+                  <option>Normal</option>
+                  <option>Chocada</option>
+                  <option>Quemada</option>
+                  <option>Prensada</option>
+                  <option>Tapa rota</option>
+                  <option>Ruedas dañadas</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div style="display: inline-block;">
-            <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Estado del contenido</h4>
-            <div class="select">
-              <select id="estadoC">
-                <option>Vacío</option>
-                <option>Medio</option>
-                <option>Lleno</option>
-                <option>Desbordado</option>
-              </select>
+            <div style="display: inline-block;margin-left: auto;margin-right: auto">
+              <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Estado del contenido</h4>
+              <div class="select">
+                <select id="estadoC">
+                  <option>Vacío</option>
+                  <option>Medio</option>
+                  <option>Lleno</option>
+                  <option>Desbordado</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div style="display: inline-block;">
-            <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Descripción</h4>
-            <div id="nota">
-              <textarea id="descripcion" style="width: 200px;height: 40px"></textarea>
+            <div style="display: inline-block;">
+              <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Descripción</h4>
+              <div id="nota">
+                <textarea id="descripcion" style="width: 200px;height: 40px"></textarea>
+              </div>
             </div>
-          </div>
-          <label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label>
-          <?php echo "<button onclick=\"btnReportar()\" id=\"boton\" name=\"submit\" type=\"button\" style=\"background-color: #287AE6; color : white\"  class=\"btn btn-block\">Reportar</button></div>";
-          ?>
+            <label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label>
+            <br>
+            <input type="file" id="imagen" onchange="previewFile()"/><br><br>
+            <img id="vistaPrevia" src="" class="img-fluid img-thumbnail rounded" style="width: 20%;height: 20%" alt=""/><br><br>
+            <?php echo "<button onclick=\"btnReportar()\" id=\"boton\" name=\"submit\" type=\"button\" style=\"background-color: #287AE6; color : white\"  class=\"btn btn-block\">Reportar</button></div>";
+            ?>
+          </form>
         </div>
       </div>
     </div>
@@ -170,7 +175,7 @@ and open the template in the editor.
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Nuevo reporte</h4>
+            <h4 style="margin-left: auto;margin-right: auto" class="modal-title">Nuevo reporte</h4>
             <button id="close" type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
@@ -226,6 +231,8 @@ and open the template in the editor.
               </div>
             </div>
             <label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label>
+             <input type="file" id="imagen" onchange="previewFile()"/><br><br>
+            <img id="nuevoReporteVistaP" src="" class="img-fluid img-thumbnail rounded" style="width: 20%;height: 20%" alt=""/><br><br>
             <?php echo "<button onclick=nuevoReport('".$numero."') id=\"nuevoReporte\" type=\"button\" style=\"background-color: #287AE6; color : white\"  class=\"btn btn-block\">Reportar</button>";
             ?>
             <div style="display: none;" id="mensajeExito" class="alert alert-success">

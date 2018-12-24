@@ -12,7 +12,7 @@
         <div class="modal-content" style="margin-top: 18%;">
 
             <div class="modal-header centrar">
-                <h2 style="padding-left: 25%px" class="modal-title" id="myModalLabel">Circuitos</h2>
+                <h2 style="margin-left: auto;margin-right: auto" class="modal-title" id="myModalLabel">Circuitos</h2>
             </div>
             <?php 
             $circuitos=circuito::listarCircuitos();

@@ -91,10 +91,10 @@ $("document").ready(function(){
 var map; 
 function initGeolocation() {
     if(watchId){
-       navigator.geolocation.clearWatch(watchID);
-       watchID = null;
-   }
-   if (navigator && navigator.geolocation) {
+     navigator.geolocation.clearWatch(watchID);
+     watchID = null;
+ }
+ if (navigator && navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(successCallback, 
       errorCallback,
       {enableHighAccuracy:true,timeout:Infinity,maximumAge:0});
@@ -109,14 +109,14 @@ function errorCallback() {}
 function successCallback(position) {
 
     var myLatlng = new google.maps.LatLng(position.coords.latitude.toFixed(8), position.coords.longitude.toFixed(8));
-   console.log(position.coords.latitude);
-   console.log(position.coords.longitude.toFixed(8));
-   var mapOtn={
-    zoom:10,
-    center:myLatlng,
-    mapTypeId:google.maps.MapTypeId.ROAD
-};
-var Pmap=document.getElementById("map");
+    console.log(position.coords.latitude);
+    console.log(position.coords.longitude.toFixed(8));
+    var mapOtn={
+        zoom:10,
+        center:myLatlng,
+        mapTypeId:google.maps.MapTypeId.ROAD
+    };
+    var Pmap=document.getElementById("map");
 
 //var map=new google.maps.Map(Pmap, mapOtn);
 addMarker(map, myLatlng,position.coords.latitude, position.coords.longitude);
@@ -167,7 +167,6 @@ $("#buscame").click(function(){
     }   
 });
 
-
 function nuevoReporte(){
     console.log("llegoo");
     var circuito = document.getElementById('circuito').value;
@@ -175,11 +174,9 @@ function nuevoReporte(){
     var estadoFisico=document.getElementById('estadoF').value;
     var estadoContenido=document.getElementById('estadoC').value;
     var residuosFuera=document.getElementById('residuos').checked;
-    if(reportar(circuito,numero,estadoFisico,estadoContenido,residuosFuera)){
-
+    if(verificarReporte(numero)){
+        console.log("ya fue reportada");
     }else{
-
-
         $.ajax({
             url: '/volquetado/logica/reportar.php',
             type: 'POST',
@@ -196,7 +193,9 @@ function nuevoReporte(){
             success: function(response){
                 console.log(response);
                 if(response.localeCompare("1")){ 
+                    reportesRealizados.push(numero);
                     console.log("exito");
+                    $("#modalReporte").modal('hide');
                 }else{
                     console.log("noexito");
                 }
@@ -206,18 +205,58 @@ function nuevoReporte(){
     }
 }
 
-function reportar(circuito,numero,estadoF,estadoC,residuos){
-    if(verificarReporte(numero)){
-        console.log("reporte ya realizado");
-    }else{
-
-    }
-}
 
 function verificarReporte(numero){
-    if(reportesRealizados.includes(numero)){
+    if(reportesRealizados.indexOf(numero) >= 0){
         return true;
     }else{
         return false;
     }    
 }
+
+function myLocation(){
+ if ("geolocation" in navigator){
+    navigator.geolocation.getCurrentPosition(function(position){ 
+        var pos = {lat: position.coords.latitude, lng: position.coords.longitude};
+        map.panTo(pos);
+    });
+}
+
+};
+
+function abrirModal(){
+    $("#modalNuevoReporte").modal();
+}
+
+function nuevoReport(circuito){
+    var estadoFisico = document.getElementById("estadoFisico").value;
+    var estadoContenido = document.getElementById("estadoContenido").value;
+    var volqueta= document.getElementById("volqueta").value;    
+    var residuos= document.getElementById("residuos").checked;
+    if(verificarReporte(numero)){
+        console.log('ya fue reportada');
+    }else{
+        $.ajax({
+            url: '/volquetado/logica/reportar.php',
+            type: 'POST',
+            data: {
+                accion:"nuevoReporte",
+                volqueta:volqueta,
+                circuito:circuito,
+                estadoContenido:estadoContenido,
+                estadoFisico:estadoFisico,
+                nota:"",
+                residuos:residuos,
+                inspeccionada:"0"
+            },
+            success: function(response){
+                console.log(response);
+                if(response.localeCompare("1")){ 
+                    reportesRealizados.push(numero);
+                    $("#modalNuevoReporte").modal('hide');
+                }
+            }
+
+        });
+    }
+};

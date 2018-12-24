@@ -10,85 +10,136 @@ and open the template in the editor.
 	<script type="text/javascript" src="../js/jquery.js"></script>
 	<script type="text/javascript" src="../js/listarTabla.js"></script>
 	<title></title>
-	<script type="text/javascript">
-		function mostrarUbicacion($lat,$long){
-			var ubicacion = { lat: $lat, lng:$long };
+	<style type="text/css">
+	@media all and (max-width: 1200px){
+		.div{
+			display: block !important;  /* Cuando el ancho sea inferior a 600px el elemento será un bloque */
+			width: 100% !important;
+			max-width: 100% !important;
+			margin: auto !important;
+			position: static !important;
+			float: none !important;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		.row{
+			display: block !important;  /* Cuando el ancho sea inferior a 600px el elemento será un bloque */
+			width: 100% !important;
+			max-width: 100% !important;
+			margin: auto !important;
+			position: static !important;
+			float: none !important;
+			margin-right: auto;
+			margin-left: auto;
+			text-align: center;
+		}
+		.divBuscar{
+			float: auto;
+			position: block;
+		}
+	}
+}
+</style>
+<script type="text/javascript">
+	function mostrarUbicacion($lat,$long){
+		var ubicacion = { lat: $lat, lng:$long };
 
-			var lat=$lat;
-			var long=long;
-			var mapProp= {
-				center:new google.maps.LatLng($lat,$long),
-				zoom:18,
-				styles:[
+		var lat=$lat;
+		var long=long;
+		var mapProp= {
+			center:new google.maps.LatLng($lat,$long),
+			zoom:18,
+			styles:[
+			{
+				"featureType": "administrative",
+				"elementType": "geometry",
+				"stylers": [
 				{
-					"featureType": "administrative",
-					"elementType": "geometry",
-					"stylers": [
-					{
-						"visibility": "off"
-					}
-					]
-				},
-				{
-					"featureType": "landscape",
-					"stylers": [
-					{
-						"visibility": "off"
-					}
-					]
-				},
-				{
-					"featureType": "poi",
-					"stylers": [
-					{
-						"visibility": "off"
-					}
-					]
-				},
-				{
-					"featureType": "poi.medical",
-					"stylers": [
-					{
-						"visibility": "on"
-					},
-					{
-						"weight": 5
-					}
-					]
-				},
-				{
-					"featureType": "transit",
-					"stylers": [
-					{
-						"visibility": "off"
-					}
-					]
+					"visibility": "off"
 				}
 				]
-			};
-
-			var map=new google.maps.Map(document.getElementById("mapa"),mapProp);
-			addMarker(ubicacion,map);
-		}
-		function addMarker(location, map) {
-			var marker = new google.maps.Marker({
-				position: location,
-				map: map,
-				icon: {
-					url: "../Imagenes/volqueta.png",
-					scaledSize: new google.maps.Size(29, 35)
+			},
+			{
+				"featureType": "landscape",
+				"stylers": [
+				{
+					"visibility": "off"
 				}
-			});
-		}
+				]
+			},
+			{
+				"featureType": "poi",
+				"stylers": [
+				{
+					"visibility": "off"
+				}
+				]
+			},
+			{
+				"featureType": "poi.medical",
+				"stylers": [
+				{
+					"visibility": "on"
+				},
+				{
+					"weight": 5
+				}
+				]
+			},
+			{
+				"featureType": "transit",
+				"stylers": [
+				{
+					"visibility": "off"
+				}
+				]
+			}
+			]
+		};
 
-	</script>
-	
+		var map=new google.maps.Map(document.getElementById("mapa"),mapProp);
+		addMarker(ubicacion,map);
+	}
+	function addMarker(location, map) {
+		var marker = new google.maps.Marker({
+			position: location,
+			map: map,
+			icon: {
+				url: "../Imagenes/volqueta.png",
+				scaledSize: new google.maps.Size(29, 35)
+			}
+		});
+	}
+	function mostrarFoto(imagen){
+		console.log(imagen);
+		$("#modalFoto").modal();
+		$("#fotoReporte").attr("src",imagen);
+	}
+</script>
+<?php 
+function base64ToImage($base64_string, $output_file) {
+	$file = fopen($output_file, "wb");
+
+	$data = explode(',', $base64_string);
+
+	fwrite($file, base64_decode($data[0]));
+	fclose($file);
+	return $output_file;
+}
+ function generateImage($img){
+	$folderPath = "images/";
+	$image_parts = explode(";base64,", $img);
+	$image_type_aux = explode("image/", $image_parts[0]);
+	$image_type = $image_type_aux[1];
+	$image_base64 = base64_decode($image_parts[1]);
+	$file = $folderPath . uniqid() . '.png';
+	file_put_contents($file, $image_base64);
+}
+?>
 </head>
 <body style="background-color: #e4e5e6">
 	<?php  include '../Vistas/barra_menu.php';?>	
-	<div style="position: absolute;width: 20%; margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center">
-		<input id="buscar" style=" display: block;margin-right: auto;margin-left: auto;width: 216px" type="text" name="Buscar" class="form-control" placeholder="Buscar" onkeyup="FiltrarTabla()" />
-	</div>
+	
 	<?php
 	include '../conexion/abrir_conexion.php';
 	include '../logica/volquetas.php';
@@ -105,13 +156,14 @@ and open the template in the editor.
 			$arreglo = mysqli_fetch_array($resultado);
 		}
 		if ($arreglo) {
-			$volqueta = new volquetas($arreglo['nro'], $arreglo['lat'], $arreglo['lng'], $arreglo['fechaIngreso'], $arreglo['estadoFisico'],$arreglo['estadoContenido']);
+			$volqueta = new volquetas($arreglo['nro'], $arreglo['lat'], $arreglo['lng'], $arreglo['fechaIngreso'], $arreglo['estadoFisico'],$arreglo['estadoContenido'],$arreglo['circuito'],$arreglo['activa']);
+			//$nro, $lat, $long, $fechaIngreso, $estadoFisico, $estadoContenido, $circuito, $activa
 		}
 	}
 	?>
-	<div style="float:left;width: auto;height: auto">
-		<div style="width: auto">
-			<ul style="padding-left: 0px">
+	<div id="info" class="row" style="float:left;width: auto;">
+		<div>
+			<ul style="padding-left: 0px;">
 				<li class="list-group-item"><h5>Volqueta número <?php echo $volqueta->getNro() ?></h5></li>
 				<li class="list-group-item">Estado físico actual: <?php echo $volqueta->getEstadoFisico() ?></li>
 				<li class="list-group-item">Estado del contenido: <?php echo $volqueta->getEstadoContenido() ?></li>
@@ -123,17 +175,20 @@ and open the template in the editor.
 		</div>
 	</div>
 	<br>
-	<div style="width: 80%;float: right;height: auto;">
-		<table id="tabla" class="table table-responsive table-striped table-bordered table-hover" style="margin-bottom: 0px;" >
+	<div class="divBuscar" style="width: 20%; margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center">
+		<input id="buscar" style=" display: block;margin-right: auto;margin-left: auto;width: 216px" type="text" name="Buscar" class="form-control" placeholder="Buscar" onkeyup="FiltrarTabla()" />
+	</div>
+	<br>
+	<div class="table-responsive div" style="width: auto;padding-right: 50px;padding-left: 50px;height: auto;">
+		<table id="tabla" class="table table-striped w-auto" style="margin-bottom: 0px;width: auto;" >
 			<thead>
-				<tr>
-
-					<th class="active" style = "color: black" >Nro registro</th>   
+				<tr> 
 					<th class="active" style = "color: black" >Fecha de registro</th>
 					<th class="active" style = "color: black" >Estado físico</th>
 					<th class="active" style = "color: black" >Estado del contenido</th>
 					<th class="active" style = "color: black" >Residuos fuera</th>
 					<th class="active" style = "color: black" >Descripción</th>
+					<th class="active" style = "color: black" >Fotografía</th>
 				</tr>
 			</thead>
 			<tbody style="background-color: #ffffff" class="thead-light">
@@ -142,7 +197,6 @@ and open the template in the editor.
 				if ($row = mysqli_fetch_array($volquetas)) {
 					do {
 						echo "<tr>";
-						echo "<td><p>" . $row["id"] . "</p></td>";
 						echo "<td><p>" . $row["fecha"] . "</p></td>";
 						echo "<td><p>" . $row['estadoFisico'] . "</p></td>";
 						echo"<td><p>" . $row['estadoContenido'] . "</p></td>";
@@ -155,6 +209,10 @@ and open the template in the editor.
 							echo"<td><p>" . $row['nota'] . "</p></td>";	
 						}else{
 							echo"<td><p>SIN DESCRIPCION</p></td>";	
+						}
+						if($row['imagen']){
+							$imagen = generateImage($row['imagen']);
+							echo "<td><button onclick=mostrarFoto('".$imagen."') style=\"background:url('../Imagenes/ver.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
 						}
 						echo "</tr>";
 					} while ($row = mysqli_fetch_array($volquetas));
@@ -178,9 +236,20 @@ and open the template in the editor.
 					<div style="width:100%;height:400px;" id="mapa"></div><br>	
 				</div>
 			</div>
+		</div>
+	</div>
 
-			<script async defer
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
-		</script>
-	</body>
-	</html>
+	<div id="modalFoto" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<img style="width: 100%;height: 100%" id="fotoReporte" src="">
+				</div>
+			</div>
+		</div>
+
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD54tM7ElFXcXcXvvfZTuFrxMySD-nUcag&callback=initMap">
+	</script>
+</body>
+</html>

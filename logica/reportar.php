@@ -12,13 +12,16 @@ if (isset($_POST["accion"])) {
 		$residuosFuera=$_POST["residuo"];
 		$nota=$_POST["nota"];
 		$inspeccionado=$_POST["inspeccionado"];
-		//echo $inspeccionado;
+		$base64=null;
+		if(isset($_FILES["archivo"])){
+			$base64 = base64_encode(file_get_contents($_FILES['archivo']['tmp_name']));
+		}
 		$fecha = new DateTime();
-		$resultado=reporte::agregarReporte($circuito,$numero,$fecha->format('Y-m-d H:i:s'), $estadoFisico, $estadoContenido, $nota, $residuosFuera, $inspeccionado);
-		if($resultado==true){
-			echo true;
+		$resultado=reporte::agregarReporte($circuito,$numero,$fecha->format('Y-m-d H:i:s'), $estadoFisico, $estadoContenido, $nota, $residuosFuera, $inspeccionado,$base64);
+		if($resultado){
+			echo '1';
 		}else{
-			echo false;
+			echo '0';
 		}
 		return;
 	}else if ($accion=="aceptarReporte") {
@@ -41,13 +44,17 @@ if (isset($_POST["accion"])) {
 		$estadoFisico=$_POST["estadoFisico"];
 		$residuos=$_POST["residuos"];
 		$nota=$_POST["nota"];
+		$base64=null;
+		if(isset($_FILES["archivo"])){
+			$base64 = base64_encode(file_get_contents($_FILES['archivo']['tmp_name']));
+		}
 		$fecha = new DateTime();
-		$inspeccionado=1;
-		$resultado = reporte::nuevoReporte($circuito,$volqueta,$fecha->format('Y-m-d H:i:s'),$estadoFisico,$estadoContenido,$nota,$residuos,$inspeccionado);
+		$inspeccionado=$_POST["inspeccionado"];
+		$resultado = reporte::nuevoReporte($circuito,$volqueta,$fecha->format('Y-m-d H:i:s'),$estadoFisico,$estadoContenido,$nota,$residuos,$inspeccionado,$base64);
 		if($resultado==true){
-			echo 1;
+			echo '1';
 		}else{
-			echo 0;
+			echo '0';
 		}
 		return;
 	}

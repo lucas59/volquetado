@@ -3,6 +3,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
 	<script type="text/javascript" src="../js/jquery-3.31.min.js"></script>
+	<script type="text/javascript" src="../js/listarTabla.js"></script>
 	<title>Oficina</title>
 	<style type="text/css">
 	#centrar{
@@ -41,6 +42,9 @@
 <body style="background-color:#e4e5e6">
 	<?php include '../Vistas/barra_menu.php'; 	
 	require ('../conexion/abrir_conexion.php');?>
+	<div style="position: absolute;width: 20%; margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center">
+		<input id="buscar" style=" display: block;margin-right: auto;margin-left: auto;width: 216px" type="text" name="Buscar" class="form-control" placeholder="Buscar" onkeyup="FiltrarTabla()" />
+	</div>
 	<?php 
 	if($_SESSION['user']==false){
 		header('location: ../index.php');
