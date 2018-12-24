@@ -126,15 +126,6 @@ function base64ToImage($base64_string, $output_file) {
 	fclose($file);
 	return $output_file;
 }
- function generateImage($img){
-	$folderPath = "images/";
-	$image_parts = explode(";base64,", $img);
-	$image_type_aux = explode("image/", $image_parts[0]);
-	$image_type = $image_type_aux[1];
-	$image_base64 = base64_decode($image_parts[1]);
-	$file = $folderPath . uniqid() . '.png';
-	file_put_contents($file, $image_base64);
-}
 ?>
 </head>
 <body style="background-color: #e4e5e6">
@@ -211,7 +202,7 @@ function base64ToImage($base64_string, $output_file) {
 							echo"<td><p>SIN DESCRIPCION</p></td>";	
 						}
 						if($row['imagen']){
-							$imagen = generateImage($row['imagen']);
+							$imagen = base64ToImage(($row['imagen']),"foto");
 							echo "<td><button onclick=mostrarFoto('".$imagen."') style=\"background:url('../Imagenes/ver.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
 						}
 						echo "</tr>";

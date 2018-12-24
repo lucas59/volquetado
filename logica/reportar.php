@@ -14,7 +14,7 @@ if (isset($_POST["accion"])) {
 		$inspeccionado=$_POST["inspeccionado"];
 		$base64=null;
 		if(isset($_FILES["archivo"])){
-			$base64 = base64_encode(file_get_contents($_FILES['archivo']['tmp_name']));
+			$base64 = base64_encode($_FILES['archivo']['tmp_name']);
 		}
 		$fecha = new DateTime();
 		$resultado=reporte::agregarReporte($circuito,$numero,$fecha->format('Y-m-d H:i:s'), $estadoFisico, $estadoContenido, $nota, $residuosFuera, $inspeccionado,$base64);
@@ -59,5 +59,4 @@ if (isset($_POST["accion"])) {
 		return;
 	}
 }
-
 ?>

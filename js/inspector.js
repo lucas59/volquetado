@@ -76,6 +76,22 @@ $("#close").click(function(){
 	document.getElementById("descripcion").value = " ";
 });
 
+function handleFileSelect(evt) {
+  var f = file.target.files[0]; // FileList object
+  var reader = new FileReader();
+  // Closure to capture the file information.
+  reader.onload = (function(theFile) {
+  	return function(e) {
+  		var binaryData = e.target.result;
+      //Converting Binary Data to base 64
+      var base64String = window.btoa(binaryData);
+  };
+})(f);
+  // Read in the image file as a data URL.
+  reader.readAsBinaryString(f);
+}
+
+
 function btnReportar(){
 	var estadoFisico = document.getElementById("estadoF").value;
 	var estadoContenido = document.getElementById("estadoC").value;

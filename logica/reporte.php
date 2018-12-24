@@ -121,7 +121,7 @@ class reporte
 
    public function agregarReporte($circuito,$numero,$fecha, $estadoFisico, $estadoContenido, $nota, $residuosFuera, $inspeccionado,$archivo){
    	$basuraFuera;
-   	if($residuosFuera=="true"){
+if($residuosFuera=="true"){
    		$basuraFuera="1";
    	}else{
    		$basuraFuera="0";
