@@ -45,6 +45,7 @@ function nuevoReport(circuito){
 	var inputFileImage = document.getElementById("imagenNuevoReporte");
 	var file = inputFileImage.files[0];
 	var data = new FormData();
+	console.log(file);
 	data.append('archivo',file);
 	data.append('estadoContenido',estadoContenido);
 	data.append('estadoFisico',estadoFisico);
@@ -61,6 +62,7 @@ function nuevoReport(circuito){
 		data:data,
 		contentType: false, //importante enviar este parametro en false
         processData: false, //importante enviar este parametro en false
+        async: false,
         success: function(response){
         	console.log(response);
         	if(response==1){ 
@@ -121,10 +123,10 @@ function btnReportar(){
         processData: false, //importante enviar este parametro en false
         success: function(response){
         	console.log(response);
-        	if(response==1){ 
+        	if(response==1 || response==0){ 
         		location.reload();
         	}else{
-        		location.reload();
+        		alert(response);
         	}
         }
     });	

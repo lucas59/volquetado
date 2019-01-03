@@ -28,7 +28,7 @@
 			</div>
 			<div class="modal-body centrar">
 				<div class="btn btn-primary btn-block" ><a style="color: #ffff" href="../Vistas/administradorUsuarios.php">Administrar usuarios</a></div>
-				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/administradorCamiones.php">Administrar camiónes</a></div>
+				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/administradorCamiones.php">Administrar camiones</a></div>
 				<div class="btn btn-primary btn-block"><a style="color: #ffff" href="../Vistas/altaVolqueta.php">Administrar volquetas</a></div>
 				<div data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-block"><a style="color: #ffff">Administrar circuitos</a></div>
 			</div>

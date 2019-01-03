@@ -96,7 +96,7 @@ class recorrido {
     public function agregarRecorrido($circuito, $padron, $matricula, $chofer, $recolector1, $recolector2, $inicio,$fin){
         $arranque=$inicio->format('Y-m-d H:i:s');
         $final=$fin->format('Y-m-d Hs:i:s');
-        $conexion = DB::conexion()->prepare("INSERT INTO `recorrido` (`id`, `circuito`, `padron`, `matricula`, `chofer`, `recolector1`, `recolector2`, `inicio`, `fin`,`terminado`) VALUES (NULL,?,?,?,?,?,?,?,?,0);");
+        $conexion = DB::conexion()->prepare("INSERT INTO `volquetado_recorrido` (`id`, `circuito`, `padron`, `matricula`, `chofer`, `recolector1`, `recolector2`, `inicio`, `fin`,`terminado`) VALUES (NULL,?,?,?,?,?,?,?,?,0);");
         $conexion->bind_param('ssssssss',$circuito,$padron,$matricula,$chofer,$recolector1,$recolector2,$arranque,$final);
         if($conexion->execute()){
             return true;
@@ -112,7 +112,7 @@ class recorrido {
         $a = 1;
         echo "<script>console.log(".$fin2.")</script>";
         $inicio=$recorrido->getInicio()->format('Y-m-d H:i:s');
-        $conexion=DB::conexion()->prepare("UPDATE recorrido SET `fin`=?,`terminado`=? WHERE `chofer`=? and `terminado` = 0 and `inicio`=?;");
+        $conexion=DB::conexion()->prepare("UPDATE volquetado_recorrido SET `fin`=?,`terminado`=? WHERE `chofer`=? and `terminado` = 0 and `inicio`=?;");
         $conexion->bind_param('siss',$fin2,$a,$chofer,$inicio);
         if($conexion->execute()){
             return true;

@@ -37,6 +37,28 @@
 			}
 		});
 	}
+	function ActivarCamion(padron,matricula){
+		$.ajax({
+			url: '/volquetado/logica/altaCamion.php',
+			type: 'POST',
+			data: {
+				accion:"activarCamion",
+				padron:padron,
+				matricula:matricula
+			},
+			success: function(response){
+				console.log(response);
+				if(response=="activado"){
+					alert("Camión activado con exito.");
+					location.reload();
+				}else if(response=="error"){
+					console.log('error');
+					alert("Error interno al borrar este camion.");
+				}
+			}
+		});
+
+	}
 </script>
 </head>
 <body style="background-color:#e4e5e6">
@@ -59,7 +81,7 @@
 				<th class="active" style = "color: black" >Marca</th>
 				<th class="active" style = "color: black" >Modelo</th>
 				<th class="active" style = "color: black" >Tipo</th>
-				<th class="active" style = "color: black" >Eliminar</th>
+				<th class="active" style = "color: black" >Activar/Desactivar</th>
 				
 			</tr>
 		</thead>
@@ -78,8 +100,11 @@
 					$padron=$row["padron"];
 					$matricula=$row["matricula"];
 					if($row['vivo']==1){
-						echo "<td><button onclick=eliminarCamion('".$padron."','".$matricula."') id=\"btnEliminar\" style=\"background:url('../Imagenes/borrar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+						echo "<td><button onclick=eliminarCamion('".$padron."','".$matricula."') id=\"btnEliminar\" style=\"background:url('../Imagenes/borrar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:35px;border:none\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+					}else{
+						echo "<td><button onclick=ActivarCamion('".$padron."','".$matricula."') id=\"btnEliminar\" style=\"background:url('../Imagenes/ok.png');background-position:center center;background-repeat:no-repeat;width:70px; height:35px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
 					}
+					/*echo "<td><button onclick=eliminarUsuario('".$ci."') id=\"btnEliminar\" style=\"background:url('../Imagenes/borrar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:35px; border:none\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";*/
 					echo "</tr>";
 				} while ($row = mysqli_fetch_array($camiones));
 				?>

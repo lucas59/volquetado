@@ -40,5 +40,13 @@ if (isset($_POST['submit'])) {
         echo 'borrado';
     }else{
         echo "error";}
+    }else if($_POST['accion']=='activarCamion'){
+         $padron = $_POST['padron'];
+    $matricula = $_POST['matricula'];
+    $salida=camion::activarCamion($padron,$matricula);
+    if($salida==true){
+        echo 'activado';
+    }else{
+        echo "error";}
     }
     ?>

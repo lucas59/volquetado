@@ -113,7 +113,8 @@ and open the template in the editor.
 	function mostrarFoto(imagen){
 		console.log(imagen);
 		$("#modalFoto").modal();
-		$("#fotoReporte").attr("src",imagen);
+		src="data:image/jpg;base64,"+imagen;
+		$("#fotoReporte").attr("src",src);
 	}
 </script>
 <?php 
@@ -202,8 +203,7 @@ function base64ToImage($base64_string, $output_file) {
 							echo"<td><p>SIN DESCRIPCION</p></td>";	
 						}
 						if($row['imagen']){
-							$imagen = base64ToImage(($row['imagen']),"foto");
-							echo "<td><button onclick=mostrarFoto('".$imagen."') style=\"background:url('../Imagenes/ver.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+							echo "<td><button onclick=mostrarFoto('".$row['imagen']."') style=\"background:url('../Imagenes/ver.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
 						}
 						echo "</tr>";
 					} while ($row = mysqli_fetch_array($volquetas));

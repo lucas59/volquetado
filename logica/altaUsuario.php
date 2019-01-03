@@ -36,6 +36,14 @@ if (isset($_POST['accion'])) {
     }else{
         echo "error";
     }
+}else if($accion=='activarUsuario'){
+     $cedula = $_POST['ci'];
+    $salida = usuario::activarUsuario($cedula);
+    if($salida == true){
+        echo 'activado';
+    }else{
+        echo "error";
+    }
 }
 }
 

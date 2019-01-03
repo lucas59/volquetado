@@ -45,8 +45,8 @@
 			<div class="modal-header centrar">
 				<h2 style="padding-left: 25%px" class="modal-title" id="myModalLabel">Bienvenido</h2>
 			</div>
-			<div class="modal-body">
-				<div style="float: left;display: inline-block;">
+			<div id="container" class="modal-body">
+				<div id="left" style="float: left;display: inline-block;">
 					<h4 style="" for="circuito" class="control-label">Circuito</h4>
 					<div class="select">
 						<?php
@@ -63,7 +63,7 @@
 						<?php } ?>
 					</div>
 				</div>
-				<div  style="display:inline-block;margin-right: auto;margin-left: auto" id="recolectores">
+				<div id="center"  style="display:inline-block;margin-right: auto;margin-left: auto" id="recolectores">
 					<h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Recolectores</h4>
 					<select id="recolector1">
 						<?php
@@ -81,7 +81,7 @@
 					</select>
 				</div>
 
-				<div style="float: right;" id="camiones">
+				<div id="right" style="float: right;" id="camiones">
 					<h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Camión</h4>
 					<?php
 					$camiones = camion::listarCamiones();

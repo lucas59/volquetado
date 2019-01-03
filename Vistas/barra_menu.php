@@ -33,7 +33,7 @@ if (isset($_SESSION['user'])) {
 ?>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="container-fluid">
-        <div><a href="../index.php"><img  style="width: 20%;height: 25%"  src="../Imagenes/camion.png"></a><a href="../index.php"><img src="../Imagenes/titulo.png"></a></div>
+        <div><a href="../index.php"><img  style="width: 20%;height: 25%"  src="../Imagenes/camion.png"></a><a href="../index.php"><img style="height: 30px;height: 30px" src="../Imagenes/inicio.png"></a></div>
         <?php if ($user != null) { ?>
             <ul  style="width: auto;" class="nav navbar-nav navbar-right" id="navbarSupportedContent">
                 <li style="right: 50px;"  class="nav-item dropdown">

@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
     if ((isset($_POST['user']) && (isset($_POST['password'])))) {
         $cedula = $_POST['user'];
         $pass = $_POST['password'];
-        $consulta = "SELECT * FROM usuarios WHERE ci=$cedula";
+        $consulta = "SELECT * FROM volquetado_usuarios WHERE ci=$cedula AND activo = 1";
         $conexion = DB::conexion();
 
         $resultado = mysqli_query($conexion, $consulta);
@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
             $usuario = new usuario($arreglo['ci'], $arreglo['nombre'], $arreglo['apellido'], $arreglo['cargo'], $arreglo['celular'], $arreglo['direccion'], $arreglo['password']);
 
             echo "<script>console.log(".$pass.");</script>";
+
             if (sha1($pass)== $usuario->getPass()) {
                 $_SESSION['user'] = $usuario;
                 $_SESSION['ciUser'] = $arreglo['ci'];

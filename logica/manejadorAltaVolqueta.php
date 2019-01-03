@@ -33,14 +33,13 @@ if(isset(($_POST['accion']))){
 
     }else if($accion=="eliminarVolqueta"){
         $numero=$_POST['numero'];
-        $lat= $_POST['lat'];
-        $long= $_POST['long'];
+        $circuito= $_POST['circuito'];
 
-        $eliminar=volquetas::borrar($numero,$lat,$long);
+        $eliminar=volquetas::borrar($numero,$circuito);
         if($eliminar==true){
-            echo "borrada";
+            echo "1";
         }else{
-            echo "error";
+            echo "0";
         }
         return;
     }else if($accion=="listarVolquetas"){

@@ -131,7 +131,7 @@ class volquetas {
         ini_set("display_errors", 1);
         error_reporting(E_ALL & ~E_NOTICE);
         $volquetas = [];
-        $stmt = DB::conexion()->prepare("SELECT * from volquetas");
+        $stmt = DB::conexion()->prepare("SELECT * from volquetado_volquetas");
         $stmt->execute();
         $resultado = $stmt->get_result();
         while ($fila = $resultado->fetch_object()) { //fetch_object devuelve el resultado 
@@ -148,7 +148,7 @@ class volquetas {
         ini_set("display_errors", 1);
         error_reporting(E_ALL & ~E_NOTICE);
         $volquetas = [];
-        $stmt = DB::conexion()->prepare("SELECT * from volquetas where circuito=? and activa = 1");
+        $stmt = DB::conexion()->prepare("SELECT * from volquetado_volquetas where circuito=? and activa = 1");
         $stmt->bind_param("s",$circuito);
         $stmt->execute();
         $resultado = $stmt->get_result();
@@ -165,7 +165,7 @@ class volquetas {
         ini_set("display_errors", 1);
         error_reporting(E_ALL & ~E_NOTICE);
         $volquetas = [];
-        $stmt = DB::conexion()->prepare("SELECT * from volquetas where circuito=? and activa = ?");
+        $stmt = DB::conexion()->prepare("SELECT * from volquetado_volquetas where circuito=? and activa = ?");
         $stmt->bind_param("si",$circuito,1);
         $stmt->execute();
         $resultado = $stmt->get_result();
@@ -178,7 +178,7 @@ class volquetas {
 
     public function listarVolquetasParaMostrar($circuito){
         $volquetas = [];
-        $stmt = DB::conexion()->prepare("SELECT * from volquetas where activa = 1");
+        $stmt = DB::conexion()->prepare("SELECT * from volquetado_volquetas where activa = 1");
         $stmt->execute();
         $resultado = $stmt->get_result();
         if($circuito=='Todos'){
@@ -201,14 +201,14 @@ class volquetas {
 public function agregarVolqueta($nro,$lat,$long,$fecha,$circuito,$forma){
 
     if($forma==2){
-        $consulta=DB::conexion()->prepare("UPDATE volquetas SET lat=?,lng=?,activa=1 WHERE nro=? AND circuito=?");
+        $consulta=DB::conexion()->prepare("UPDATE volquetado_volquetas SET lat=?,lng=?,activa=1 WHERE nro=? AND circuito=?");
         $consulta->bind_param("ddss",$lat,$long,$nro,$circuito);
         if($consulta->execute()){
             return true;
         }else{
             return false;}
         }else if($forma==0){  
-            $conexion = DB::conexion()->prepare("INSERT INTO volquetas(nro,lat,lng,fechaIngreso,estadoFisico,estadoContenido,circuito,activa) VALUES (?,?,?,?,?,?,?,1)");
+            $conexion = DB::conexion()->prepare("INSERT INTO volquetado_volquetas(nro,lat,lng,fechaIngreso,estadoFisico,estadoContenido,circuito,activa) VALUES (?,?,?,?,?,?,?,1)");
             $normal = "Normal";
             $vacio = "Vacio";
             //$l=(double)$lat;
@@ -223,10 +223,10 @@ public function agregarVolqueta($nro,$lat,$long,$fecha,$circuito,$forma){
             }
         }
     }
-    public function borrar($numero,$lat,$long){
-     $consulta=DB::conexion()->prepare("UPDATE volquetas SET activa=0 WHERE nro=? AND lat=? AND lng=?");
-     $consulta->bind_param("sdd",$numero,$lat,$long);
-     if($consulta->execute()){
+    public function borrar($numero,$circuito){
+       $consulta=DB::conexion()->prepare("UPDATE volquetado_volquetas SET activa=0 WHERE nro=? AND circuito=? ");
+       $consulta->bind_param("ss",$numero,$circuito);
+       if($consulta->execute()){
         return true;
     }else{
         return false;}
@@ -234,14 +234,14 @@ public function agregarVolqueta($nro,$lat,$long,$fecha,$circuito,$forma){
     }
 
     public function listarTodas() {
-        $consulta = DB::conexion()->prepare("SELECT * FROM volquetas WHERE activa = 1 ORDER by circuito ASC");
+        $consulta = DB::conexion()->prepare("SELECT * FROM volquetado_volquetas WHERE activa = 1 ORDER by circuito ASC");
         $consulta->execute();
         $resultado = $consulta->get_result();
         return $resultado;
     }
 
     public function mostrarHistoria($nro) {
-        $consulta = DB::conexion()->prepare("SELECT * FROM historiavolquetas WHERE nro=? ORDER BY fecha DESC");
+        $consulta = DB::conexion()->prepare("SELECT * FROM volquetado_historiavolquetas WHERE nro=? ORDER BY fecha DESC");
         $consulta->bind_param("i",$nro);
         $consulta->execute();
         $resultado = $consulta->get_result();
@@ -250,7 +250,7 @@ public function agregarVolqueta($nro,$lat,$long,$fecha,$circuito,$forma){
 
     public static function existe($numero,$circuito) {
         $retorno;
-        $consulta = DB::conexion()->prepare("select * from volquetas where nro= ? and circuito = ?");
+        $consulta = DB::conexion()->prepare("select * from volquetado_volquetas where nro= ? and circuito = ?");
         $consulta->bind_param("ss",$numero,$circuito);
         $consulta->execute();
         $resultado = $consulta->get_result();

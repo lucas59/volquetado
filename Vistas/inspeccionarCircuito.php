@@ -88,7 +88,9 @@ and open the template in the editor.
             echo "<td><p>" . $reporte[$i]->getNota() . "</p></td>";
             echo "<td><button onclick=reportar('".$reporte[$i]->getCircuito()."','".$reporte[$i]->getNro()."') id=\"reportar\" style=\"background:url('../Imagenes/reportar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
             if($reporte[$i]->getInspeccion()==false){
-              echo "<td><button onclick=aceptarDatos('".$reporte[$i]->getCircuito()."','".$reporte[$i]->getNro()."','".$reporte[$i]->getEstadoFisico()."','".$reporte[$i]->getEstadoContenido()."','".$reporte[$i]->getContenidoFuera()."') style=\"background:url('../Imagenes/ok.png');background-position:center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+              echo "<td><button onclick=aceptarDatos('".$reporte[$i]->getCircuito()."','".$reporte[$i]->getNro()."','".$reporte[$i]->getEstadoFisico()."','".$reporte[$i]->getEstadoContenido()."','".$reporte[$i]->getContenidoFuera()."') style=\"background:url('../Imagenes/ok.png');background-position:center;background-repeat:no-repeat;width:70px; height:35px;border:none\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+            }else{
+              echo "<td><button onclick=aceptarDatos('".$reporte[$i]->getCircuito()."','".$reporte[$i]->getNro()."','".$reporte[$i]->getEstadoFisico()."','".$reporte[$i]->getEstadoContenido()."','".$reporte[$i]->getContenidoFuera()."') disabled=\"true\" style=\"background:url('../Imagenes/aceptado.png');background-position:center;background-repeat:no-repeat;width:70px; height:35px;border:none\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
             }
             echo "</tr>";
             //}
@@ -113,9 +115,9 @@ and open the template in the editor.
           <form id="miForm" enctype="multipart/form-data">
             <input id="circuito" type="text" style="display: none;" name="circuito"/>
             <input id="numero" type="text" style="display: none;" name="numero"/>
-            <div style="margin-left: auto;margin-right: auto" style="display: inline-block;">
-              <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label title">Estado físico</h4>
-              <div class="select">
+            <div style="display: inline-block;">
+              <h4 for="circuito" class="control-label title">Estado físico</h4>
+              <div style="margin-right: center;margin-left: center" class="select">
                 <select id="estadoF">
                   <option>Normal</option>
                   <option>Chocada</option>
@@ -126,9 +128,9 @@ and open the template in the editor.
                 </select>
               </div>
             </div>
-            <div style="display: inline-block;margin-left: auto;margin-right: auto">
+            <div style="display: inline-block">
               <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Estado del contenido</h4>
-              <div class="select">
+              <div  style="margin-right:auto;margin-left:auto;" class="select">
                 <select id="estadoC">
                   <option>Vacío</option>
                   <option>Medio</option>
@@ -138,15 +140,15 @@ and open the template in the editor.
               </div>
             </div>
             <div style="display: inline-block;">
-              <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Descripción</h4>
+              <h4 for="circuito" class="control-label">Descripción</h4>
               <div id="nota">
                 <textarea id="descripcion" style="width: 200px;height: 40px"></textarea>
               </div>
-            </div>
+            </div><br>
             <label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label>
             <br>
-            <input type="file" id="imagen" onchange="previewFile()"/><br><br>
-            <img id="vistaPrevia" src="" class="img-fluid img-thumbnail rounded" style="width: 20%;height: 20%" alt=""/><br><br>
+            <input data-max-size="1024" type="file" id="imagen" onchange="previewFile()"/><br><br>
+            <img id="vistaPrevia" src="" class="img-fluid img-thumbnail rounded" style="width: 20%;height: 20%;border-style: none;" alt=""/>
             <?php echo "<button onclick=\"btnReportar()\" id=\"boton\" name=\"submit\" type=\"button\" style=\"background-color: #287AE6; color : white\"  class=\"btn btn-block\">Reportar</button></div>";
             ?>
           </form>
@@ -185,7 +187,7 @@ and open the template in the editor.
             <!-- mustro las volquetas de este circuito -->
             <!--//////////////////////////////////////////////////////////////////////////-->
             <div style="display: inline-block;">
-              <label style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Volqueta</label>
+              <h4 for="circuito" class="control-label">Volqueta</h4>
               <div class="select">
                 <select id="volqueta">
                   <?php
@@ -197,10 +199,10 @@ and open the template in the editor.
 
                   <?php } ?>
                 </select>
-              </div>
+              </div><br>
               <div style="display: inline-block;">
-                <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label title">Estado físico</h4>
-                <div class="select">
+                <h4 style="text-align: center;margin-left: auto;margin-right: auto;" for="circuito" class="control-label title">Estado físico</h4>
+                <div style="margin-right: auto;margin-left: auto;" class="select">
                   <select id="estadoF">
                     <option>Normal</option>
                     <option>Chocada</option>
@@ -211,9 +213,9 @@ and open the template in the editor.
                   </select>
                 </div>
               </div>
-              <div style="display: inline-block;">
-                <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Estado del contenido</h4>
-                <div class="select">
+              <div style="display: inline-block; float: right;">
+                <h4 style="text-align: center;margin-left: auto;margin-right: auto;" for="circuito" class="control-label">Estado del contenido</h4>
+                <div style="margin-left: auto;margin-right: auto;" class="select">
                   <select id="estadoC">
                     <option>Vacío</option>
                     <option>Medio</option>
@@ -222,17 +224,17 @@ and open the template in the editor.
                     <option></option>
                   </select>
                 </div>
-              </div>
+              </div><br>
               <div style="display: inline-block;">
                 <h4 style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Descripción</h4>
                 <div id="nota">
                   <textarea id="notita" style="width: 200px;height: 40px"></textarea>
                 </div>
               </div>
-            </div>
-            <label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label>
-             <input type="file" id="imagen" onchange="previewFile()"/><br><br>
-            <img id="nuevoReporteVistaP" src="" class="img-fluid img-thumbnail rounded" style="width: 20%;height: 20%" alt=""/><br><br>
+            </div><br>
+            <label><input id="residuos" type="checkbox" name="checkbox">Residuos fuera</label><br>
+            <input type="file" id="imagenNuevoReporte" onchange="previewFile()"/><br><br>
+            <img id="nuevoReporteVistaP" src="" class="img-fluid img-thumbnail rounded" style="width: 20%;height: 20%;border: none;" alt=""/>
             <?php echo "<button onclick=nuevoReport('".$numero."') id=\"nuevoReporte\" type=\"button\" style=\"background-color: #287AE6; color : white\"  class=\"btn btn-block\">Reportar</button>";
             ?>
             <div style="display: none;" id="mensajeExito" class="alert alert-success">

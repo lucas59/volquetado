@@ -34,145 +34,91 @@ function mostrarVolquetas(circuito){
 }
 
 
-
-    /*
-    marcadores=[];
-    console.log(volquetas);
-    if(circuito==='Todos'){
-        for ($i = 0; $i < volquetas.length; $i++) {
-            agregarVolqueta($volquetas[$i][0],$volquetas[$i][1], $volquetas[$i][2],$volquetas[$i][3] , $volquetas[$i][4],$volquetas[$i][5], $volquetas[$i][6]);
-        }
-    }else{
-        for ($i = 0; $i < volquetas.length; $i++) {
-            //console.log(volquetas[$i]['nro']);
-            if(volquetas[$i]['circuito']==circuito){
-                agregarVolqueta(volquetas[$i]['nro'],volquetas[$i]['lat'], volquetas[$i]['log'],volquetas[$i]['fecha'] , volquetas[$i]['estadoF'],volquetas[$i]['estadoC'], volquetas[$i]['circuito']);
-            }
-        }
-    } 
-    initMap();
-    //console.log(marcadores);*/
-
-    function clickVolqueta(volqueta){
-        for(let info of infoWindows){
-            if( info.title == volqueta.title){
-                if(ultimoInfoWindows != null)
-                    ultimoInfoWindows.close();
-                info.open(map,volqueta);
-                ultimoInfoWindows = info;
-            }
+function clickVolqueta(volqueta){
+    for(let info of infoWindows){
+        if( info.title == volqueta.title){
+            if(ultimoInfoWindows != null)
+                ultimoInfoWindows.close();
+            info.open(map,volqueta);
+            ultimoInfoWindows = info;
         }
     }
+}
 
 
-    function eliminarVolqueta(volqueta){
-        var numero = volqueta.title;
-        var lat = volqueta.getPosition().lat();
-        var lng = volqueta.getPosition().lng();
-        console.log(numero);
-        console.log(lat);
-        console.log(lng);
-
-        $.ajax({
-            url: '/volquetado/logica/manejadorAltaVolqueta.php',
-            type: 'POST',
-            data: {
-                accion:"eliminarVolqueta",
-                numero:numero,
-                lat:lat,
-                long:lng
-            },
-            success: function(response){
-                console.log(response);
-                if(response.localeCompare("borrada")){
-                /*$("#numero").text="";
-                $("#myModal").modal('hide');
-                $("#modalRetornoExito").modal();*/
-                console.log('borrada');
-                location.reload();
-            }else if(response.localeCompare("error")){
-                console.log('error');
-            }
-        },
-        error: function(response){
-                        //console.log(response);
-                    }
-                });
-    }
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: faisalabad,
-            disableDefaultUI: true,
-            styles:[
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: faisalabad,
+        disableDefaultUI: true,
+        styles:[
+        {
+            "featureType": "administrative",
+            "elementType": "geometry",
+            "stylers": [
             {
-                "featureType": "administrative",
-                "elementType": "geometry",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "landscape",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
-            },
-            {
-                "featureType": "poi.medical",
-                "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "weight": 5
-                }
-                ]
-            },
-            {
-                "featureType": "transit",
-                "stylers": [
-                {
-                    "visibility": "off"
-                }
-                ]
+                "visibility": "off"
             }
             ]
-        });
-
-        google.maps.event.addListener(map,"click",function(evento){
-            if(marcador!==null){
-                marcador.setMap(null);
+        },
+        {
+            "featureType": "landscape",
+            "stylers": [
+            {
+                "visibility": "off"
             }
-            marcador = new google.maps.Marker({
-                position:evento.latLng,
-                map:map,
-                icon:{
-                    url:"../Imagenes/volqueta.png",
-                    scaledSize:new google.maps.Size(29,35)
-                }
-            });
-            faisalabad=evento.latLng;
-            $('#myModal').modal();
+            ]
+        },
+        {
+            "featureType": "poi",
+            "stylers": [
+            {
+                "visibility": "off"
+            }
+            ]
+        },
+        {
+            "featureType": "poi.medical",
+            "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "weight": 5
+            }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "stylers": [
+            {
+                "visibility": "off"
+            }
+            ]
+        }
+        ]
+    });
+
+    google.maps.event.addListener(map,"click",function(evento){
+        if(marcador!==null){
+            marcador.setMap(null);
+        }
+        marcador = new google.maps.Marker({
+            position:evento.latLng,
+            map:map,
+            icon:{
+                url:"../Imagenes/volqueta.png",
+                scaledSize:new google.maps.Size(29,35)
+            }
         });
+        faisalabad=evento.latLng;
+        $('#myModal').modal();
+    });
 
 
-        let i;
-        for(i=0;i<marcadores.length;i++){
-        infoWindows.push( new google.maps.InfoWindow({title:marcadores[i][0],content:'Circuito: ' + marcadores[i][6]+ '<br> Numero: '+ marcadores[i][0]+ '<br> Estado físico: '+ marcadores[i][4]/*+'<br><button onclick=\"eliminar('+marcadores[i][0]+','+marcadores[i][6]+')\"(>Eliminar</button>'*/}));
+    let i;
+    for(i=0;i<marcadores.length;i++){
+        infoWindows.push( new google.maps.InfoWindow({title:marcadores[i][0],content:'Circuito: ' + marcadores[i][6]+ '<br> Numero: '+ marcadores[i][0]+ '<br> Estado físico: '+ marcadores[i][4]+'<br><button onclick=eliminar("'+marcadores[i][0]+','+marcadores[i][6]+'")>Eliminar</button>'}));
         marker= new google.maps.Marker({
             position: new google.maps.LatLng(marcadores[i][1],marcadores[i][2]),
             title:marcadores[i][0],
@@ -194,6 +140,34 @@ function mostrarVolquetas(circuito){
     }
 }
 
+function eliminar(info){
+    var datos = info.split(",");
+    console.log(datos[0]);
+    console.log(datos[1]);
+    $.ajax({
+        url: '/volquetado/logica/manejadorAltaVolqueta.php',
+        type: 'POST',
+        data: {
+            accion:"eliminarVolqueta",
+            numero:datos[0],
+            circuito:datos[1]
+        },
+        success: function(response){
+            console.log(response);
+            if(response==1){
+                console.log('borrada');
+                location.reload();
+            }else if(response==0){
+                console.log('error');
+            }
+        },
+        error: function(response){
+            console.log(response);
+        }
+    });
+    
+
+}
 function myLocation(){
  if ("geolocation" in navigator){
     navigator.geolocation.getCurrentPosition(function(position){ 

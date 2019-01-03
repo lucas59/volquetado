@@ -168,7 +168,7 @@
       <!-- mustro las volquetas de este circuito -->
       <!--//////////////////////////////////////////////////////////////////////////-->
       <div style="display: inline-block;">
-          <label style="text-align: center;margin-left: auto;" for="circuito" class="control-label">Volqueta</label>
+          <h4 for="circuito" class="control-label">Volqueta</h4>
           <div class="select">
             <select id="volqueta">
               <?php

@@ -192,7 +192,7 @@ function nuevoReporte(){
             },
             success: function(response){
                 console.log(response);
-                if(response.localeCompare("1")){ 
+                if(response==1){ 
                     reportesRealizados.push(numero);
                     console.log("exito");
                     $("#modalReporte").modal('hide');
@@ -247,11 +247,11 @@ function nuevoReport(circuito){
                 estadoFisico:estadoFisico,
                 nota:"",
                 residuos:residuos,
-                inspeccionada:"0"
+                inspeccionado:"0"
             },
             success: function(response){
                 console.log(response);
-                if(response.localeCompare("1")){ 
+                if(response=="1"){ 
                     reportesRealizados.push(numero);
                     $("#modalNuevoReporte").modal('hide');
                 }

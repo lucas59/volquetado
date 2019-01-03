@@ -33,11 +33,14 @@
 if (isset($_GET['malPass'])) {
     ?>
     <script>
-        $('#modal').modal();
+        alert("Contraseña incorrecta.")
     </script>
     <?php
 } elseif (isset($_GET['noExiste'])) {
     ?>
+    <script type="text/javascript">
+        alert("El usuario no existe.");
+    </script>
 }
 <script>
     $('#modal').modal();

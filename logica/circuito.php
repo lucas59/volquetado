@@ -22,11 +22,11 @@ class circuito  {
 
 	public static function listarCircuitos() {
 		$conexion = DB::conexion();
-		return $resultado = mysqli_query($conexion, "SELECT * FROM circuito");
+		return $resultado = mysqli_query($conexion, "SELECT * FROM volquetado_circuito");
 	}
 
 	public function agregarCircuito($circuito){
-			$insert = DB::conexion()->prepare("INSERT INTO `circuito` (`circuito`) VALUES (?)");
+			$insert = DB::conexion()->prepare("INSERT INTO `volquetado_circuito` (`circuito`) VALUES (?)");
 			$insert->bind_param("s",$circuito);
 			if($insert->execute()){
 				return true;
@@ -36,7 +36,7 @@ class circuito  {
 	}
 
 	public function getCircuito($circuito){
-		$consulta = DB::conexion()->prepare("SELECT * from circuito where circuito = ?");
+		$consulta = DB::conexion()->prepare("SELECT * from volquetado_circuito where circuito = ?");
 		$consulta->bind_param("s",$circuito);
 		$consulta->execute();
 		$resultado=$consulta->get_result();

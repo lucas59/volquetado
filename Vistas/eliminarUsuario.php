@@ -13,7 +13,7 @@
 	}
 </style>
 <script type="text/javascript">
-	function eliminarCamion(ci){
+	function eliminarUsuario(ci){
 		$.ajax({
 			url: '/volquetado/logica/altaUsuario.php',
 			type: 'POST',
@@ -25,6 +25,26 @@
 				console.log(response);
 				if(response=="borrado"){
 					alert("Usuario borrado con exito.");
+					location.reload();
+				}else if(response=="error"){
+					console.log('error');
+					alert("Error interno al borrar el usuario.");
+				}
+			}
+		});
+	}
+	function activarUsuario(ci){
+		$.ajax({
+			url: '/volquetado/logica/altaUsuario.php',
+			type: 'POST',
+			data: {
+				accion:"activarUsuario",
+				ci:ci,
+			},
+			success: function(response){
+				console.log(response);
+				if(response=="activado"){
+					alert("Usuario activado con exito.");
 					location.reload();
 				}else if(response=="error"){
 					console.log('error');
@@ -55,7 +75,7 @@
 				<th class="active" style = "color: black" >Permiso de conducción</th>
 				<th class="active" style = "color: black" >Celular</th>
 				<th class="active" style = "color: black" >Dirección</th>
-				<th class="active" style = "color: black" >Eliminar</th>
+				<th class="active" style = "color: black" >Activar/Desactivar</th>
 				
 				
 			</tr>
@@ -72,7 +92,7 @@
 					echo "<td><p>" . $row['cargo'] . "</p></td>";
 					$hoy = date("Y-m-d");
 					if($row['cargo']!='Chofer'){
-							echo "<td><p>No ingresada</p></td>";
+						echo "<td><p>No ingresada</p></td>";
 					}else{
 						if($hoy<=$row['libreta']){
 							echo "<td><p>" . $row['libreta'] . "</p></td>";
@@ -83,7 +103,10 @@
 						echo "<td><p>" . $row['direccion'] . "</p></td>";
 						if($row['activo']==1){
 							$ci =$row['ci'];
-							echo "<td><button onclick=eliminarCamion('".$ci."') id=\"btnEliminar\" style=\"background:url('../Imagenes/borrar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:25px\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+							echo "<td><button onclick=eliminarUsuario('".$ci."') id=\"btnEliminar\" style=\"background:url('../Imagenes/borrar.png');background-position:center center;background-repeat:no-repeat;width:70px; height:35px; border:none\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
+						}else{
+							$ci =$row['ci'];
+							echo "<td><button onclick=activarUsuario('".$ci."') id=\"btnEliminar\" style=\"background:url('../Imagenes/ok.png');background-position:center center;background-repeat:no-repeat;width:70px; height:35px; border:none\" type=\"input\" name=\"Ver\" class=\"btn btn-primary\"></button></td>";
 						}
 						echo "</tr>";
 					} while ($row = mysqli_fetch_array($usuarios));

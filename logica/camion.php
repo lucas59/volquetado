@@ -71,7 +71,7 @@ class camion {
     }
     
     public function habilidatCamion($padron,$matricula,$marca,$modelo,$tipo){
-        $consulta=DB::conexion()->prepare("UPDATE camion SET vivo = '1', marca =?,modelo=?,tipo=? WHERE padron = ? AND matricula = ?");
+        $consulta=DB::conexion()->prepare("UPDATE volquetado_camion SET vivo = '1', marca =?,modelo=?,tipo=? WHERE padron = ? AND matricula = ?");
         $consulta->bind_param('sssss',$marca,$modelo,$tipo,$padron,$matricula);
         if($consulta->execute()){
             return true;
@@ -82,7 +82,7 @@ class camion {
 
     public static function existeCamion($padron,$matricula) {
         $retorno;
-        $consulta = DB::conexion()->prepare("select * from camion where padron=? AND matricula=?");
+        $consulta = DB::conexion()->prepare("select * from volquetado_camion where padron=? AND matricula=?");
         $consulta->bind_param("ss",$padron,$matricula);
         $consulta->execute();
         //
@@ -105,7 +105,7 @@ class camion {
 
     public static function ingresar($padron,$matricula, $marca, $modelo, $tipo) {
         $conexion = DB::conexion();
-        $sql = "INSERT INTO camion (padron,matricula, marca, modelo, tipo,vivo) VALUES('$padron','$matricula','$marca','$modelo','$tipo',1)";
+        $sql = "INSERT INTO volquetado_camion (padron,matricula, marca, modelo, tipo,vivo) VALUES('$padron','$matricula','$marca','$modelo','$tipo',1)";
         $resultado = mysqli_query($conexion, $sql);
         if ($resultado == TRUE) {
             return true;
@@ -115,11 +115,11 @@ class camion {
     }
     public static function listarCamiones() {
         $conexion = DB::conexion();
-        return $resultado = mysqli_query($conexion, "SELECT * from camion");
+        return $resultado = mysqli_query($conexion, "SELECT * from volquetado_camion");
     }
 
     public function buscarCamion($matricula){
-        $consulta=DB::conexion()->prepare("SELECT * FROM camion where matricula=?");
+        $consulta=DB::conexion()->prepare("SELECT * FROM volquetado_camion where matricula=?");
         $consulta->bind_param("s",$matricula);
         $consulta->execute();
         $resultado = $consulta->get_result();
@@ -130,7 +130,16 @@ class camion {
         return $camion;
     }
     public function borrarCamion($padron,$matricula){
-     $consulta=DB::conexion()->prepare("UPDATE camion SET vivo = '0' WHERE padron = ? AND matricula = ?");
+     $consulta=DB::conexion()->prepare("UPDATE volquetado_camion SET vivo = '0' WHERE padron = ? AND matricula = ?");
+     $consulta->bind_param('ss',$padron,$matricula);
+     if($consulta->execute()){
+        return true;
+    }else{
+        return false;
+    }
+}
+public function activarCamion($padron,$matricula){
+     $consulta=DB::conexion()->prepare("UPDATE volquetado_camion SET vivo = '1' WHERE padron = ? AND matricula = ?");
      $consulta->bind_param('ss',$padron,$matricula);
      if($consulta->execute()){
         return true;
